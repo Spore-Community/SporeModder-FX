@@ -5868,7 +5868,7 @@ parentAudio	0x5F6317D5
 cellSizePitchCurve
 cellSizeGainCurve
 smallbcurve
-largebcuve
+largebcurve
 
 foodTrayScale	0x9AD14166
 creatureBrainLevelScales	0xB561B9EB
