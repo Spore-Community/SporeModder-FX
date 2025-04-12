@@ -5863,7 +5863,12 @@ numchannels
 numNouns
 forestNouns
 speciesFiles
+
 parentAudio	0x5F6317D5
+cellSizePitchCurve
+cellSizeGainCurve
+smallbcurve
+largebcuve
 
 foodTrayScale	0x9AD14166
 creatureBrainLevelScales	0xB561B9EB
