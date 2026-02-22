@@ -38,6 +38,7 @@ import io.github.emd4600.javafxribbon.RibbonTab;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -110,9 +111,11 @@ import sporemodder.view.FilterableTreeItem;
 import sporemodder.view.FilterableTreeItem.TreeItemPredicate;
 import sporemodder.view.UserInterface;
 import sporemodder.view.editors.spui.SpuiDraggableType;
+import sporemodder.view.editors.spui.SpuiDrawableItemCell;
 import sporemodder.view.editors.spui.SpuiEditorSkin;
 import sporemodder.view.editors.spui.SpuiImageChooser;
 import sporemodder.view.editors.spui.SpuiImageFileChooser;
+import sporemodder.view.editors.spui.SpuiImageItemCell;
 import sporemodder.view.editors.spui.SpuiObjectCreatedAction;
 import sporemodder.view.editors.spui.SpuiPropertyAction;
 import sporemodder.view.editors.spui.SpuiRibbonTab;
@@ -172,12 +175,12 @@ public class SpuiEditor extends AbstractEditableEditor implements EditHistoryEdi
 	private TreeView<IWindow> tvWindows;
 	private FilterableTreeItem<IWindow> rootWindowsItem;
 
+	private TreeView<IDrawable> tvDrawables;
+	private FilterableTreeItem<IDrawable> rootDrawablesItem;
+
 	// We could use a list, but that would require creating a FilterableListItem...
 	private TreeView<ISporeImage> tvImages;
 	private FilterableTreeItem<ISporeImage> rootImagesItem;
-
-	private TreeView<IDrawable> tvDrawables;
-	private FilterableTreeItem<IDrawable> rootDrawablesItem;
 
 	/** The selected element whose properties are being displayed in the inspector. */
 	private final ObjectProperty<InspectableObject> selectedElement = new SimpleObjectProperty<>();
@@ -251,13 +254,15 @@ public class SpuiEditor extends AbstractEditableEditor implements EditHistoryEdi
 			}
 		});
 
-		rootImagesItem = new FilterableTreeItem<ISporeImage>(null);
-		tvImages = new TreeView<ISporeImage>(rootImagesItem);
-		tvImages.setShowRoot(false);
-
 		rootDrawablesItem = new FilterableTreeItem<IDrawable>(null);
 		tvDrawables = new TreeView<IDrawable>(rootDrawablesItem);
 		tvDrawables.setShowRoot(false);
+		tvDrawables.setCellFactory(c -> new SpuiDrawableItemCell());
+
+		rootImagesItem = new FilterableTreeItem<ISporeImage>(null);
+		tvImages = new TreeView<ISporeImage>(rootImagesItem);
+		tvImages.setShowRoot(false);
+		tvImages.setCellFactory(c -> new SpuiImageItemCell());
 
 		tabPane = new TabPane();
 		propertiesContainer = new ScrollPane();
@@ -266,15 +271,50 @@ public class SpuiEditor extends AbstractEditableEditor implements EditHistoryEdi
 		tabPane.setMaxHeight(260);
 
 		Tab windowsTab = new Tab("Layout", tvWindows);
-		Tab imagesTab = new Tab("Images", tvImages);
 		Tab drawablesTab = new Tab("Drawables", tvDrawables);
+		Tab imagesTab = new Tab("Images", tvImages);
 		windowsTab.setClosable(false);
-		imagesTab.setClosable(false);
 		drawablesTab.setClosable(false);
+		imagesTab.setClosable(false);
 
-		tabPane.getTabs().addAll(windowsTab, imagesTab, drawablesTab);
+		tabPane.getTabs().addAll(windowsTab, drawablesTab, imagesTab);
 		tabPane.getSelectionModel().select(0);
 		tabPane.setPrefHeight(TAB_PANE_HEIGHT);
+		
+		
+		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+			public <T> InspectableObject getFromTree(TreeView<T> tree) {
+				TreeItem<T> w = tree.getSelectionModel().getSelectedItem();
+				T value = w.getValue();
+				if (value instanceof InspectableObject)
+					return (InspectableObject)value;
+				else
+					return null;
+			}
+
+			@Override
+			public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
+				if (oldValue == newValue)
+					return;
+				else if (oldValue == null)
+					return;
+
+
+				InspectableObject selectedObject = null;
+				if (newValue == windowsTab)
+					selectedObject = getFromTree(tvWindows);
+				else if (newValue == drawablesTab)
+					selectedObject = getFromTree(tvDrawables);
+				else if (newValue == imagesTab)
+					selectedObject = getFromTree(tvImages);
+				else
+					return;
+
+				if (selectedObject != null) {
+					selectedElement.set(selectedObject);
+				}
+			}
+		});
 
 		tfSearch = new TextField();
 		tfSearch.setPromptText("Search");
@@ -307,12 +347,12 @@ public class SpuiEditor extends AbstractEditableEditor implements EditHistoryEdi
 			}
 		});
 
-		tvImages.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
-			if (newValue != null) selectedElement.set((InspectableObject) newValue.getValue());
-		});
-
 		tvDrawables.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
 			if (newValue != null) selectedElement.set(newValue.getValue());
+		});
+
+		tvImages.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+			if (newValue != null) selectedElement.set((InspectableObject) newValue.getValue());
 		});
 
 		selectedElement.addListener((obs, oldValue, newValue) -> {
@@ -668,13 +708,13 @@ public class SpuiEditor extends AbstractEditableEditor implements EditHistoryEdi
 		if (value instanceof ISporeImage) {
 			int index = getImageIndex((ISporeImage) value);
 			tvImages.getSelectionModel().select(index);
-			tabPane.getSelectionModel().select(1);
+			tabPane.getSelectionModel().select(2);
 			tvImages.scrollTo(index);
 		}
 		else if (value instanceof IDrawable) {
 			int index = getDrawableIndex((IDrawable) value);
 			tvDrawables.getSelectionModel().select(index);
-			tabPane.getSelectionModel().select(2);
+			tabPane.getSelectionModel().select(1);
 			tvDrawables.scrollTo(index);
 		}
 		else if (value instanceof IWindow) {
@@ -1181,6 +1221,18 @@ public class SpuiEditor extends AbstractEditableEditor implements EditHistoryEdi
 	private FilterableTreeItem<IWindow> getWindowItem(IWindow window) {
 		return (FilterableTreeItem<IWindow>) ((InspectableObject)window).getTreeItem();
 	}
+
+	/*
+	private TreeCell<ISporeImage> createImageCell() {
+		SpuiImageItemCell cell = new SpuiImageItemCell();
+		return cell;
+	}
+
+	private SpuiDrawableItemCell createDrawableCell() {
+		SpuiDrawableItemCell cell = new SpuiDrawableItemCell();
+		return cell;
+	}
+	*/
 
 	private void removeDropStyle() {
 		if (dropZone != null) {

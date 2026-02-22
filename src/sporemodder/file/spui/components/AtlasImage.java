@@ -18,6 +18,8 @@
 ****************************************************************************/
 package sporemodder.file.spui.components;
 
+import java.text.DecimalFormat;
+
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -239,5 +241,60 @@ public class AtlasImage extends SpuiElement implements ISporeImage {
 	
 	public int[] getDimensions() {
 		return dimensions;
+	}
+
+	/*
+	@Override public String toString() {
+		String ret = "(" + getUVCoordinates().toString() + ")";
+		if (atlas != null)
+			ret = atlas.toString() + " " + ret;
+
+		return ret;
+	}
+	*/
+
+	static DecimalFormat editorUVDisplayFormat = new DecimalFormat("#.###");
+	static String editorDisplayFormat2Floats(float a, float b) {
+		return editorUVDisplayFormat.format(a) + ',' + editorUVDisplayFormat.format(b);
+	}
+
+
+	private String getUVString() {
+		SPUIRectangle uv = getUVCoordinates();
+		float x1 = uv.x1;
+		float x2 = uv.x2;
+		float y1 = uv.y1;
+		float y2 = uv.y2;
+		if (atlas != null) {
+			float w = atlas.getWidth();
+			x1 *= w;
+			x2 *= w;
+
+			float h = atlas.getHeight();
+			y1 *= h;
+			y2 *= h;
+		}
+		return editorDisplayFormat2Floats(x1, y1) + ',' + editorDisplayFormat2Floats(x2, y2);
+	}
+
+
+	@Override public String getLinkString() {
+		String ret = "";
+		if (ret != null)
+			ret = atlas.getLinkString() + " ";
+
+		return ret + getUVString();
+	}
+	@Override public String toString() {
+		return getLinkString();
+	}
+
+
+	@Override public String getImageListString() {
+		String ret = "";
+		if (ret != null)
+			ret = atlas.getImageListString() + " ";
+
+		return ret + getUVString();
 	}
 }

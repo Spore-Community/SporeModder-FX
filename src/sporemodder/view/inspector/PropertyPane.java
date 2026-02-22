@@ -140,6 +140,7 @@ public class PropertyPane {
 	
 	public static Button createHyperlink(String text, EventHandler<ActionEvent> eventHandler) {
 		Button button = new Button(text);
+		button.setMnemonicParsing(false);
 		button.getStyleClass().addAll("hyperlink", "button-no-background");
 		if (eventHandler != null) button.setOnAction(eventHandler);
 		return button;
