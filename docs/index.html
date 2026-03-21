@@ -1,0 +1,78 @@
+---
+download_url: https://github.com/Spore-Community/SporeModder-FX/releases/latest/download/SporeModderFX.zip
+java_url: https://aka.ms/download-jdk/microsoft-jdk-21-windows-x64.msi
+smc_discord_url: https://discord.gg/QR8CjQT
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SporeModder FX</title>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+    <link rel="stylesheet" href="/style/default.css">
+    <link rel="icon" href="/style/images/smfx.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="The most advanced and modern Spore data modding tool.">
+    <meta name="keywords" content="Spore, SporeModder, SporeModderFX, SMFX, SporeMaster, DBPF, package, mods">
+    <meta property="og:title" content="SporeModder FX">
+    <meta property="og:description" content="The most advanced and modern Spore data modding tool.">
+    <meta property="og:image" content="/style/images/smfx.png">
+</head>
+
+<body>
+
+    <header>
+        <div id="site-header" href="/">
+            <img id="site-logo" src="/style/images/smfx.png" width="64" height="64" alt="SporeModder FX Logo">
+            <h1 id="site-title">SporeModder FX</h1>
+        </div>
+    </header>
+
+    <article id="intro">
+
+        <div id="smfx-download">
+            <p>The most advanced and modern Spore data modding tool.</p>
+            <p>Open, browse, and edit the contents of Maxis Database Packed Files (DBPFs), also known as .package files.</p>
+            <p>Enhanced editing support for a wide variety of custom Maxis file formats used in Spore.</p>
+            <a rel="noopener" href="{{ page.download_url }}"><button>Download SporeModder FX</button></a>
+            <p>Requires <a rel="noopener" href="{{ page.java_url }}">Java 11 or newer</a></p>
+        </div>
+
+        <div id="useful-links">
+            <a href="{{ site.github.wiki_url }}"><button>Documentation</button></a>
+            <a href="{{ site.github.repository_url }}"><button>View on GitHub</button></a>
+            <a target="_blank" rel="noopener noreferrer" href="{{ page.smc_discord_url }}"><button>Spore Modding Community Discord</button></a>
+        </div>
+
+    </article>
+
+    <article>
+        <h2>User-friendly</h2>
+        <p>Simple, easy and pretty. A modern user interface for a modern tool.</p>
+        <img src="/screenshots/ui-ribbon.png" class="screenshot" alt="Screenshot of SMFX's ribbon UI">
+
+        <h2>Easy coding</h2>
+        <p>A new format that makes coding .prop files easier than ever. Includes error highlighting, so you can instantly detect what you are doing wrong. And autocomplete, to make coding a bit faster and more convienient.</p>
+        <img src="/screenshots/text-errors.png" class="screenshot" alt="Screenshot of SMFX's error highlighting">
+        <img src="/screenshots/text-autocomplete.png" class="screenshot" alt="Screenshot of SMFX's autocomplete">
+
+        <h2>User Interface Editor</h2>
+        <img src="/screenshots/ui-editor.png" class="screenshot" alt="Screenshot of SMFX's UI editor">
+
+        <h2>Texture Viewer</h2>
+        <img src="/screenshots/texture-viewer.png" class="screenshot" alt="Screenshot of SMFX's texture viewer">
+
+        <h2>Model Viewer</h2>
+        <img src="/screenshots/model-viewer.png" class="screenshot" alt="Screenshot of SMFX's model viewer">
+    </article>
+
+    <footer>
+        <p>SporeModder FX is maintained by various contributors from the Spore community. Contact via <a target="_blank" rel="noopener noreferrer" href="{{ page.smc_discord_url }}">Discord</a> or <a href="mailto:smfx@sporecommunity.com">email</a>. Source code on <a target="_blank" rel="noopener noreferrer" href="{{ site.github.repository_url }}">GitHub</a>. Licensed under the <a href="{{ site.github.license.url }}">{{ site.github.license.name }}</a>.</p>
+        <p><strong>Not associated with or endorsed by Electronic Arts or Maxis.</strong> SporeModder FX is unofficial and not supported by EA or Maxis.</p>
+    </footer>
+
+</body>
+
+</html>
