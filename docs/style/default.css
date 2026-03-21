@@ -1,0 +1,124 @@
+@import "spore.css";
+
+:root {
+    --smfx: #d4dbdc;
+    --smfx-gradient: linear-gradient(#dce5e4, #cbd0d3);
+}
+
+html {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Variable', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    background: var(--spore-glyphic-bg);
+    color: var(--spore-text-color);
+}
+
+body {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#site-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--smfx-gradient);
+    background-clip: text;
+    color: transparent;
+
+    text-decoration: none;
+}
+
+#site-logo {
+    width: 64px;
+    height: 64px;
+    margin-right: 16px;
+}
+
+article {
+    background: var(--spore-flat-bg);
+    padding: 32px;
+    margin-bottom: 32px;
+}
+
+footer {
+    font-size: 12px;
+}
+
+#intro {
+    display: flex;
+    gap: 64px;
+}
+
+#intro #useful-links button {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.screenshot {
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--spore-font);
+}
+
+a {
+    color: var(--spore-light-space);
+}
+
+hr {
+    border: 2px solid var(--spore-mid-space);
+    margin: 32px 0;
+}
+
+td, th {
+    border-top: 1px solid var(--spore-mid-space);
+    border-bottom: 1px solid var(--spore-mid-space);
+    padding: 4px;
+}
+
+input {
+    background: var(--spore-cool);
+    font-size: 16px;
+    padding: 5px 13px;
+    border: 3px var(--spore-neutral) solid;
+    border-radius: 32px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--spore-light-space);
+}
+
+input:invalid:focus {
+    border-color: #A42433;
+}
+
+button {
+    background: var(--spore-mid-space);
+    color: var(--spore-white);
+    font-family: var(--spore-font);
+    font-size: 18px;
+    padding: 5px 13px;
+    border: 3px transparent solid;
+    border-radius: 32px;
+    transition: 0.1s;
+}
+
+button:hover {
+    border-color: var(--spore-light-space);
+}
+
+button:active {
+    background: var(--spore-deep-space-gradient);
+}
+
+button:disabled {
+    color: var(--spore-neutral);
+}
+
+pre {
+    white-space: pre-wrap;
+}

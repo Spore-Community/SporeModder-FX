@@ -1,0 +1,71 @@
+/* Fonts */
+
+@font-face {
+    font-family: Spore-Regular;
+    src: url(fonts/Spore-Regular.ttf);
+}
+
+@font-face {
+    font-family: Spore-Light;
+    src: url(fonts/Spore-Light.ttf);
+}
+
+@font-face {
+    font-family: "Trebuchet EA";
+    src: url(fonts/trebucheteabold.ttf);
+}
+
+@font-face {
+    font-family: "Palatino Sans EA";
+    src: url(fonts/palatinosanseabold.ttf);
+}
+
+
+/* Global styles */
+
+:root {
+    /* Colors */
+    --spore-white: #FFF;
+    --spore-cool: #F0F1F4;
+    --spore-neutral: #939496;
+    --spore-deep-grey: #6D6E70;
+    --spore-light-space: #4E9DD8;
+    --spore-mid-space: #2361A7;
+    --spore-deep-space: #000112;
+    --spore-accent-green: #B1CD49;
+    --spore-accent-orange: #E0932F;
+    --spore-accent-purple: #CA0088;
+    /* Gradients */
+    --spore-text-gradient: linear-gradient(#F6F6F6, #CED1D4);
+    --spore-cool-gradient: linear-gradient(#FFFFFF, #E9EEF0);
+    --spore-glass-pane-gradient: linear-gradient(#FBFBFB, #E4F0F6);
+    --spore-space-gradient: linear-gradient(#4171B5, #5057A3, #272458);
+    --spore-deep-space-gradient: linear-gradient(#2070B8, #233164, #00000D);
+    --spore-accent-green-gradient: linear-gradient(#B1CD49, #004620);
+    --spore-accent-orange-gradient: linear-gradient(#E0932F, #A42433);
+    --spore-accent-purple-gradient: linear-gradient(#CA0088, #5B308D);
+    /* Fonts */
+    --spore-font: Spore-Regular, sans-serif;
+    --spore-light-font: Spore-Light, sans-serif;
+    --spore-heading-font: "Palatino Sans EA", sans-serif;
+    --spore-body-font: "Trebuchet EA", sans-serif;
+    /* Images */
+    --spore-glyphic-bg-light: url(images/glyphic-bg-light.png) var(--spore-cool);
+    --spore-glyphic-bg-dark: url(images/glyphic-bg-dark.png) var(--spore-deep-space);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --spore-text-color: #000;
+        --spore-glyphic-bg: var(--spore-glyphic-bg-light);
+        --spore-flat-bg: var(--spore-cool);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --spore-text-color: #fff;
+        --spore-glyphic-bg: var(--spore-glyphic-bg-dark);
+        --spore-flat-bg: var(--spore-deep-space);
+    }
+}
