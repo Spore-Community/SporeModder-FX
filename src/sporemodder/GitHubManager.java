@@ -1,6 +1,7 @@
 package sporemodder;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -43,6 +44,7 @@ public class GitHubManager extends AbstractManager {
     private String userAccessToken;
     private String lastDeviceLoginCode;
     private boolean hasShowGitDialog;
+    private boolean hasGithubAppClientId = false;
 
     /**
      * Returns the current instance of the GitHubManager class.
@@ -58,18 +60,28 @@ public class GitHubManager extends AbstractManager {
 
     @Override
     public void initialize(Properties properties) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(GitHubManager.class.getResourceAsStream("/sporemodder/resources/githubApp.txt")))) {
-            clientId = reader.readLine().trim();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        InputStream githubApp = GitHubManager.class.getResourceAsStream("/sporemodder/resources/githubApp.txt");
+        if (githubApp != null) {
+            InputStreamReader githubAppReader = new InputStreamReader(githubApp);
+            try (BufferedReader reader = new BufferedReader(githubAppReader)) {
+                clientId = reader.readLine().trim();
+                hasGithubAppClientId = true;
+            } catch (IOException e) {
+                //throw new RuntimeException(e);
+            }
         }
 
-        username = properties.getProperty(PROPERTY_gitUsername);
-        emailAddress = properties.getProperty(PROPERTY_gitEmail);
-        if (username != null) username = username.trim();
-        if (emailAddress != null) emailAddress = emailAddress.trim();
 
-        hasShowGitDialog = properties.getProperty(PROPERTY_hasShowGitDialog, "false").equals("true");
+        if (hasGithubAppClientId) {
+            username = properties.getProperty(PROPERTY_gitUsername);
+            emailAddress = properties.getProperty(PROPERTY_gitEmail);
+            if (username != null) username = username.trim();
+            if (emailAddress != null) emailAddress = emailAddress.trim();
+
+            hasShowGitDialog = properties.getProperty(PROPERTY_hasShowGitDialog, "false").equals("true");
+        } else {
+            hasShowGitDialog = true;
+        }
     }
 
     @Override public void saveSettings(Properties properties) {
@@ -561,7 +573,14 @@ public class GitHubManager extends AbstractManager {
      * After the dialog is shown, it will not be shown again.
      */
     public void showFirstTimeDialog() {
-        if (!hasShowGitDialog) {
+        if (!hasGithubAppClientId) {
+            String title = "GitHub API Key Missing";
+            String contentText = "This build of SporeModder FX lacks a GitHub API Key. GitHub integrations may not function. ('src/sporemodder/resources/githubApp.txt')";
+
+            Alert alert = new Alert(AlertType.INFORMATION, contentText, ButtonType.OK);
+            alert.setTitle(title);
+            UIManager.get().showDialog(alert);
+        } else if (!hasShowGitDialog) {
             SetGitUserUI.show();
             hasShowGitDialog = true;
             MainApp.get().saveSettings();
