@@ -133,6 +133,8 @@ ve_EditorKeys_economic-air~	0x406B7B35
 ve_EditorKeys_cultural-water~	0x406B7B34
 ve_EditorKeys_cultural-land~	0x406B7B33
 ve_EditorKeys_cultural-air~	0x406B7B32
+parts_EditorKeys~	0x406B7BFF
+paints_EditorKeys~	0x406B7BFE
 ufo_paint_palette~	0x406B6B47
 captain_editor_palette_pages2~	0x406B6CCB
 editor_rigblocks~	0x40606000
