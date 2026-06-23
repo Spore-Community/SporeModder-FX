@@ -76,3 +76,5 @@ desktop.ini
 dependency-reduced-pom.xml
 /src/sporemodder/resources/githubApp.txt
 /config.properties
+_Build.bat
+.settings/org.eclipse.jdt.core.prefs

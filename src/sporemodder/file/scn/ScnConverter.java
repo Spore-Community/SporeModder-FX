@@ -1,4 +1,4 @@
-package sporemodder.file.lvl;
+package sporemodder.file.scn;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
 import sporemodder.util.ProjectItem;
 
-public class LvlConverter implements Converter {
+public class ScnConverter implements Converter {
 	
 	private static final int TYPE_ID = 0x47b8300;
 	private static String extension = null;
@@ -36,7 +36,7 @@ public class LvlConverter implements Converter {
 	
 	@Override
 	public boolean decode(StreamReader stream, File outputFolder, ResourceKey key) throws Exception {
-		return decode(stream, Converter.getOutputFile(key, outputFolder, "lvl_t"));
+		return decode(stream, Converter.getOutputFile(key, outputFolder, "scn_t"));
 	}
 
 	@Override
@@ -93,7 +93,11 @@ public class LvlConverter implements Converter {
 	@Override
 	public boolean isEncoder(File file) {
 		checkExtensions();
-		return file.isFile() && file.getName().endsWith("." + extension + ".lvl_t");
+		return file.isFile() && (
+                file.getName().endsWith("." + extension + ".scn_t") ||
+                file.getName().endsWith(".lvl.scn_t") || // Deprecated
+                file.getName().endsWith(".lvl.lvl_t") // Deprecated
+        );
 	}
 
 	@Override
@@ -117,7 +121,7 @@ public class LvlConverter implements Converter {
 		if (!item.isRoot()) {
 			
 			if (item.isMod() && isEncoder(item.getFile())) {
-				MenuItem menuItem = new MenuItem("Convert to LVL");
+				MenuItem menuItem = new MenuItem("Convert to SCN");
 				menuItem.setMnemonicParsing(false);
 				menuItem.setOnAction(event -> {
 					// This is after isEncoder(), so we can assume it has extension
@@ -142,7 +146,7 @@ public class LvlConverter implements Converter {
 				ResourceKey key = ProjectManager.get().getResourceKey(item);
 				
 				if (isDecoder(key)) {
-					MenuItem menuItem = new MenuItem("Convert to LVL_T");
+					MenuItem menuItem = new MenuItem("Convert to SCN_T");
 					menuItem.setMnemonicParsing(false);
 					menuItem.setOnAction(event -> {
 						final File outputFile = Converter.getOutputFile(key, item.getFile().getParentFile(), "lvl_t");

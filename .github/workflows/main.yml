@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
-          owner: emd4600
+          owner: Spore-Community
           repo: SporeModder-FX-Updater
           ref: main
           workflow_file_name: main.yml
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout SporeModder-FX-Updater
         uses: actions/checkout@v4
         with:
-          repository: emd4600/SporeModder-FX-Updater
+          repository: Spore-Community/SporeModder-FX-Updater
 
       - name: Set up JDK 11 for x64
         uses: actions/setup-java@v3
@@ -36,7 +36,7 @@ jobs:
         run: mvn -B package --file pom.xml
 
       - name: Generate release zip
-        run: zip -r "SporeModder FX.zip" "SporeModder FX"
+        run: zip -r "SporeModderFX.zip" "SporeModder FX"
 
       - name: Copy updater
         run: |
@@ -48,7 +48,7 @@ jobs:
           name: SporeModder-FX-Release
           path: |
             SporeModderFX.Updater.jar
-            "SporeModder FX.zip"
+            SporeModderFX.zip
           
   publish_release:
     name: Publish Release
@@ -81,4 +81,4 @@ jobs:
           body_path: changelog.txt
           files: |
             SporeModderFX.Updater.jar
-            SporeModder FX.zip
+            SporeModderFX.zip

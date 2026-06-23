@@ -1754,3 +1754,6 @@ mTimeSinceLastUFOMS	0x5540e28
 mTimeSinceLastSimMS	0x5540e44
 mTradeRouteProgress	0x55271c7
 mRouteLength	0x55555c7
+
+mSpeciesKey	0x3f66f9c
+mDensity	0x350801a

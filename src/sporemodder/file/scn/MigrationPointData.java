@@ -1,4 +1,4 @@
-package sporemodder.file.lvl;
+package sporemodder.file.scn;
 
 import java.io.IOException;
 

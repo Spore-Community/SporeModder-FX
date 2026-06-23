@@ -1,4 +1,4 @@
-Check the website: https://emd4600.github.io/SporeModder-FX/
+Check the website: https://smfx.sporecommunity.com
 
 SporeModder FX is a tool for designing modifications for the videogame Spore. So far it's the most advanced tool, including features such as:
  - An advanced text editor, with syntax highlighting, error diagnose, autocomplete,...
@@ -10,7 +10,7 @@ SporeModder FX is a tool for designing modifications for the videogame Spore. So
 The tool is designed to have a simple and user-friendly user interface, so making mods for Spore is easier than ever!
 
 If you have any doubt, want to report a bug or you just want to suggest how to improve the program, you can:
- - Create an issue at https://github.com/emd4600/SporeModder-FX/issues
+ - Create an issue at https://github.com/Spore-Community/SporeModder-FX/issues
  - Join the Spore Modding discord server, and ask for help or contact me there.
 
 ## Development
@@ -21,7 +21,7 @@ mvn -Drevision="2.2.3" clean package
 ```
 The output file will be generated in `shade/sporemodderfx.jar`. Change the revision to the appropriate version number. The version number is read by the program and used to check for updates.
 
-For generating an update, check https://github.com/emd4600/SporeModder-FX-Updater
+For generating an update, check https://github.com/Spore-Community/SporeModder-FX-Updater
 
 ## Credits
 SporeModder FX was programmed in Java 1.8, using the Eclipse tool. Additionally, the following libraries were used:

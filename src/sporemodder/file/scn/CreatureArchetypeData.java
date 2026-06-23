@@ -1,4 +1,4 @@
-package sporemodder.file.lvl;
+package sporemodder.file.scn;
 
 import java.io.IOException;
 
@@ -86,7 +86,7 @@ public class CreatureArchetypeData extends GameplayMarkerData {
 		if (nestType != 1) writer.command("nestType").arguments(NEST_TYPE_ENUM.get(nestType));
 		if (overrideHerdSize != 0) writer.command("overrideHerdSize").ints(overrideHerdSize);
 		if (personality != 0) writer.command("personality").arguments(PERSONALITY_ENUM.get(personality));
-		if (withoutNest != false) writer.command("withoutNest").arguments(withoutNest);
+		if (withoutNest) writer.command("withoutNest").arguments(withoutNest);
 		if (scaleMultiplier != 0.0) writer.command("scaleMultiplier").floats(scaleMultiplier);
 		if (hitpointOverride != 0.0) writer.command("hitpointOverride").floats(hitpointOverride);
 		if (damageMultiplier != 0.0) writer.command("damageMultiplier").floats(damageMultiplier);

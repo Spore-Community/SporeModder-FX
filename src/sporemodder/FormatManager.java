@@ -45,7 +45,7 @@ import sporemodder.file.cnv.CnvConverter;
 import sporemodder.file.dbpf.DBPFConverter;
 import sporemodder.file.effects.EffectsConverter;
 import sporemodder.file.gait.GaitConverter;
-import sporemodder.file.lvl.LvlConverter;
+import sporemodder.file.scn.ScnConverter;
 import sporemodder.file.otdb.PollenMetadataConverter;
 import sporemodder.file.otdb.SummaryConverter;
 import sporemodder.file.pctp.PCTPConverter;
@@ -88,7 +88,7 @@ public class FormatManager extends AbstractManager {
 		converters.add(new CellLookAlgorithmConverter());
 		converters.add(new ScenarioConverter());
 		converters.add(new GaitConverter());
-		converters.add(new LvlConverter());
+		converters.add(new ScnConverter());
 		converters.add(new BitmapConverter());
 		converters.add(new DBPFConverter());
 		converters.add(new AnimConverter());

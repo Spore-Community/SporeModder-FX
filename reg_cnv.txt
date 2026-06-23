@@ -10,7 +10,7 @@ UnderAttack	8
 Militaristic	9
 Cultural	10
 Diplomatic	11
-Eplorative	12
+Explorative	12
 Sporty	13
 Trade	14
 GrobGoal	15

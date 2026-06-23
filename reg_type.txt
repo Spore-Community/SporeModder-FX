@@ -35,6 +35,7 @@ ico	0x14885d1c
 tlsa	0x4aeb6bc6
 pctp	0x7c19aa7a
 xml	0xcf6c21b8
+layout	0xC7A91467
 layout	0xefbda3ff
 layout_bin	0x050f4731
 dat	0x12952634
@@ -81,6 +82,7 @@ snd	0x42c9cbb
 submix	0x2c9eff2
 voice	0x29e333b
 lvl	0x47b8300
+scn	0x47b8300
 structure	0x4b9ef6dc
 populate	0xda141c1b
 advect	0x4805684
@@ -164,6 +166,8 @@ json	0x0a98eaf0
 er2	0x08068aec
 eapdPixie	0x0330a65e
 mrk	0x2b7df427
+aif	0x01005967
+ltp	0xf2b924b3
 
 kGameData	0x17F243B
 kCheatObject	0x2A37E35
@@ -599,4 +603,4 @@ bak2.png	0xDC74130E
 
 arg	0x2523258
 blockinfo	0x793f6424
-adv 0x366a930d
+adv	0x366a930d

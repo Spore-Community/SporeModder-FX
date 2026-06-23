@@ -21,6 +21,7 @@
 .raster=Creation Rasterized Texture
 .rw4=RenderWare4 Model/Texture/Material
 .lvl=Game Level
+.scn=Game Level
 .lua=Lua Script
 .bem=Binary Editor Model
 .cll=Cell Creation Model
@@ -47,3 +48,6 @@
 .vertex_fragment=Vertex Shader Fragment
 .pixel_fragment=Pixel Shader Fragment
 .bnk=Wwise SoundBank
+.snr=MPEG-1 Layer 3/XA Audio Sample
+.sns=Audio Stream
+.snd=Audio Seek Table

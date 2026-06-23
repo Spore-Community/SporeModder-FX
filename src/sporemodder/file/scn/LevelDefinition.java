@@ -16,7 +16,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
-package sporemodder.file.lvl;
+package sporemodder.file.scn;
 
 import java.io.File;
 import java.io.IOException;
@@ -167,14 +167,14 @@ public class LevelDefinition {
 		File folder = new File(path);
 		for (File file : folder.listFiles())
 		{
-			if (file.getName().endsWith(".lvl"))
+			if (file.getName().endsWith(".scn"))
 			{
 				System.out.println(file.getName());
 				try (FileStream stream = new FileStream(file, "r")) {
 					LevelDefinition lvl = new LevelDefinition();
 					lvl.read(stream);
 					
-					lvl.toArgScript().write(new File(outputFolder, file.getName() + ".lvl_t"));
+					lvl.toArgScript().write(new File(outputFolder, file.getName() + ".scn_t"));
 					
 					for (GameplayMarker marker : lvl.markers) {
 						System.out.println(marker.pos + 

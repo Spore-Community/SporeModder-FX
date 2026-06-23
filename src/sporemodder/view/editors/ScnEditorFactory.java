@@ -18,32 +18,26 @@
 ****************************************************************************/
 package sporemodder.view.editors;
 
-import sporemodder.file.lvl.LevelDefinition;
-import sporemodder.view.UserInterface;
+import javafx.scene.Node;
+import sporemodder.util.ProjectItem;
 
-public class LvlEditor extends ArgScriptEditor<LevelDefinition> {
-	
-	public LvlEditor() {
-		super();
-		
-		LevelDefinition unit = new LevelDefinition();
-		stream = unit.generateStream();
+public class ScnEditorFactory implements EditorFactory {
+
+	@Override
+	public ItemEditor createInstance() {
+		return new ScnEditor();
+	}
+
+	@Override
+	public boolean isSupportedFile(ProjectItem item) {
+        return !item.isFolder() && (
+            item.getName().endsWith(".scn_t") ||
+            item.getName().endsWith(".lvl_t") // Deprecated
+        );
 	}
 	
-	@Override protected void onStreamParse() {
-		stream.getData().clear();
-	}
-	
-	@Override protected void showInspector(boolean show) {
-		if (show) {
-			UserInterface.get().getInspectorPane().configureDefault("Level Definition (LVL)", "LVL", null);
-		} else {
-			UserInterface.get().getInspectorPane().reset();
-		}
-	}
-	
-	@Override public void setActive(boolean isActive) {
-		super.setActive(isActive);
-		showInspector(isActive);
+	@Override
+	public Node getIcon(ProjectItem item) {
+		return null;
 	}
 }

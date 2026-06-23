@@ -58,7 +58,7 @@ import sporemodder.view.editors.GMDLModelViewer;
 import sporemodder.view.editors.GaitEditorFactory;
 import sporemodder.view.editors.ImageViewer;
 import sporemodder.view.editors.ItemEditor;
-import sporemodder.view.editors.LvlEditorFactory;
+import sporemodder.view.editors.ScnEditorFactory;
 import sporemodder.view.editors.PctpEditorFactory;
 import sporemodder.view.editors.PfxEditorFactory;
 import sporemodder.view.editors.PollenMetadataEditor;
@@ -151,7 +151,7 @@ public class EditorManager extends AbstractManager implements UIUpdateListener {
 		editorFactories.add(new CellGlobalsEditorFactory());
 		editorFactories.add(new CellLookAlgorithmEditorFactory());
 		editorFactories.add(new GaitEditorFactory());
-		editorFactories.add(new LvlEditorFactory());
+		editorFactories.add(new ScnEditorFactory());
 		editorFactories.add(new CompiledShaderViewerFactory());
 		editorFactories.add(new ShaderBuilderEditorFactory());
 		editorFactories.add(new ShaderFragmentEditorFactory());
