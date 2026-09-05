@@ -180,13 +180,13 @@ public class GameManager extends AbstractManager {
 		String path = properties.getProperty(PROPERTY_pathSpore, "AUTO");
 		if (!path.equals("AUTO") && !path.isEmpty()) {
 			spore = createSpore(path);
-			isSporeAuto = spore != null;
+			isSporeAuto = spore == null;
 		}
 		
 		path = properties.getProperty(PROPERTY_pathGA, "AUTO");
 		if (!path.equals("AUTO") && !path.isEmpty()) {
 			ga = createGA(path);
-			isGAAuto = ga != null;
+			isGAAuto = ga == null;
 		}
 		
 		path = properties.getProperty(PROPERTY_pathCustom);
