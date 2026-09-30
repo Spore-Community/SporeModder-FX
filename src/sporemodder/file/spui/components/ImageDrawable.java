@@ -55,4 +55,12 @@ public class ImageDrawable extends IDrawable {
 		if (image == null) return super.getDimensions(imageIndex);
 		return new Vector2(image.getWidth(), image.getHeight());
 	}
+
+	@Override public String toString() {
+		String ret = super.toString();
+		if (image != null)
+			ret += " (" + image.toString() + ')';
+
+		return ret;
+	}
 }

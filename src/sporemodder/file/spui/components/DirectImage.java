@@ -65,10 +65,6 @@ public class DirectImage extends InspectableObject implements ISporeImage {
 		this.key.copy(other.key);
 	}
 
-	@Override public String toString() {
-		return "Image: " + getLinkString();
-	}
-
 	public ResourceKey getKey() {
 		return key;
 	}
@@ -218,8 +214,17 @@ public class DirectImage extends InspectableObject implements ISporeImage {
 		writer.addImage(this);
 	}
 
+
 	// Showing the whole key takes too much space, so omit the folder
-	public String getLinkString() {
+	@Override public String getLinkString() {
 		return HashManager.get().getFileName(key.getInstanceID()) + '.' + HashManager.get().getTypeName(key.getTypeID());
+	}
+
+	@Override public String toString() {
+		return getLinkString();
+	}
+
+	@Override public String getImageListString() {
+		return HashManager.get().getFileName(key.getGroupID()) + '!' + getLinkString();
 	}
 }

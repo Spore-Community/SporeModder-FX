@@ -248,4 +248,7 @@ public interface ISporeImage {
 				color1.getOpacity() * color2.getOpacity());
 		return newColor;
 	}
+
+	public abstract String getImageListString();
+	public abstract String getLinkString();
 }
