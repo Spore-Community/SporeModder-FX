@@ -594,7 +594,7 @@ basic_chassis_23
 basic_chassis_24
 basicbite
 bass_slide
-Bawb
+bawb
 bbaby_congrats_big_v3roxcr
 bbaby_greetedroxcr
 bbaby_lookaround_v1roxcr
@@ -3115,7 +3115,7 @@ diplomat-4
 diplomat-5
 dirt
 div
-Dolb
+dolb
 domes
 domes_claymation
 domes_conglomerate
@@ -3677,7 +3677,7 @@ foe_vi_torch_01b_03tm
 foe_vi_torch_01b_03tm_nog
 foe_vi_torch_01c_03tm
 foe_vi_torch_01c_03tm_nog
-Fohlees
+fohlees
 foot_step_bare_l_dirt
 foot_step_bare_l_grass
 foot_step_bare_l_sand
@@ -3854,7 +3854,7 @@ fruit_squish8
 frustrated_roar
 fux
 fux2
-Gaal
+gaal
 gait0
 gait1
 gait2
@@ -4457,7 +4457,7 @@ idle_walk_normal_armsmoving
 idle_walkstop_01
 idle_walkstop_02
 idle_walkstop_03
-Ildeeni
+ildeeni
 impact_lg1
 impact_lg10
 impact_lg11
@@ -4512,13 +4512,13 @@ jackofalltrades-4
 jackofalltrades-5
 jetpropulsion
 joker-1
-Jowwi
+jowwi
 jump1-5
 keys
 kingfisher1
 kingfisher2
 kingfisher3
-Kroot
+kroot
 laser
 laserlevel1
 laserlevel2
@@ -4701,7 +4701,7 @@ log_roll6
 log_roll7
 log_roll8
 log_roll9
-Loobo
+loobo
 low
 low_bumpymix
 low_pulse_cymbal
@@ -6123,7 +6123,7 @@ sightseer-2
 sightseer-3
 sightseer-4
 sightseer-5
-Simnu
+simnu
 SimpleUVdCube_SporeTangentShader
 sine-short
 skybox
@@ -6831,7 +6831,7 @@ SporeUIDesignerProjectCommon
 SporeUIDesignerProjectCustom
 SporeUIDesignerResourceManConfig
 SporeUITextStyles
-Sporoo
+sporoo
 sprint1-5
 spulse
 spurts
@@ -7752,7 +7752,7 @@ upgrade_water_vi_02
 upgrade_water_vi_03
 upgrade_water_vi_04
 upright_bass2
-Urgah
+urgah
 uzi
 vast_city
 vast_city1
@@ -50865,7 +50865,7 @@ homer
 sloth
 EL_FireTempest
 LF_SupportTempest
-turtle
+Turtle
 shooter
 verdanthboss
 cryosboss
@@ -53406,7 +53406,7 @@ Tak
 Tree_Scroll
 Troyah
 Lantern
-This is not a spy ship
+This Is Not A Spy Ship
 Capsasian_Abductor
 Centlaw
 Lunar_Invader_V19
@@ -54785,7 +54785,7 @@ logo_platcross
 logo_purplecross
 logo_satellux
 logo_void
-moozilla
+Moozilla
 moozillafactories
 policy_morale
 policy_smokedetector
@@ -77025,7 +77025,7 @@ auto_#406B7B0C_ce_details_glasses
 auto_creature_parts~_2ce_details_glasses
 auto_spacetools~_genesisdevice
 auto_achievements~_alg-aluminumcell
-WoodenLady
+Woodenlady
 part
 Unknown
 EAI_GlassTexture
@@ -77468,54 +77468,54 @@ kNanoDrone~	0x6EF0F11
 kPlaceableSound~	0x74E0069
 kPlaceableEffect~	0x7B38BA7
 
-AdventureEditorPaletteAudioSlotUI~   0x053541ED
-AditorCombatVerbIconUI~   0x05722A76
-AdventureTerraformPaletteTerrainColorsUI~   0x09C89EA4
-AdventureLoadscreenUI~   0x1183CE71
-EditorPaletteItemRolloverVerbEntryUI~   0x14880158
-EditorPaintPaletteSubcategoryUI~   0x1A43A8E7
-GlobalUISpace~   0x1E453B88
-AdventureEditorPaletteVehicleSlotUI~   0x20C2D857
-AdventureEditorPaletteEffectSlotUI~   0x2646AE28
-AdventureEditorAdvancedBehaviourEntryUI~   0x2A5EF353
-EditorComplexityMeterCreativityKillerUI~   0x2793D3E9
-AdventureTerraformPaletteWeatherUI~   0x2ABCD1F0
-PartDiscoveryUI~   0x2D2EB184
-HutHoverButtonsUI~   0x2EFD42B4
-AdventureEditorMetadataUI~   0x3109197D
-MyCollectionsCellUI~   0x375E8335
-AdventureEditorFrameUI~   0x396F69F5
-AdventureEditorPaletteMediumPlantSlotUI~   0x3B0AC2C4
-PlannerBuildingPurchaseUI~   0x4F087663
-GlobalUIAdventure~   0x526920C3
-EditorFrameUI~   0x5B168EB1
-GlobalUICreature~   0x5ED10964
-EditorPaintPaletteThemesCategoryUI~   0x6575CDB2
-EditorSocialVerbIconUI~   0x68E93C2B
-GlobalUICivilization~   0x6A6CE68B
-CaptainEditorStatMetersUI~   0x6DD7DE95
-AdventureEditorPaletteBuildingSlotUI~   0x6F8B1DEF
-AdventureEditorCaptainGoalsInfoUI~   0x709CBC09
-AdventureEditorActInfoBarUI~   0x7250E3A1
-EditorCurrencyMeterUI~   0x734D3BA1
-AdventureEditorPaletteCreatureSlotUI~   0x74F95D5C
-GlobalUITribe~   0x7A7D0EB8
-EditorMetadataUI~   0x80C5E3C3
-PlannerMetadataUI~   0x81C67B30
-LoginProgressUI~   0x834B03AF
-AdventureEditorPaletteFixedObjectSlotUI~   0x8679192D
-LoginEntryUI~   0x880BE64
-AdventureEditorEndTextEditorUI~   0x8DDC5DAC
-SpaceCaptainInfoUI~   0x9831B38F
-GlobalUIPauseAdventure~   0x9DB9E495
-EditorPalettePageArrowsUI~   0xB0039D21
-CaptainEditorFrameUI~   0xBB4BC487
-AdventureEditorPaletteGameplayObjectSlotUI~   0xBBDA757A
-EditorAbilityVerbIconUI~   0xBED39F24
-AdventureEditorComplexityMeterCreativityKillerUI~   0xC01318C2
-AdventureEditorStartTextEditorUI~   0xD492676D
-AdventureTerraformPaletteFloraUI~   0xD5521361
-AdventureActGoalsUI~   0xF8D70D51
+AdventureEditorPaletteAudioSlotUI~	0x053541ED
+AditorCombatVerbIconUI~	0x05722A76
+AdventureTerraformPaletteTerrainColorsUI~	0x09C89EA4
+AdventureLoadscreenUI~	0x1183CE71
+EditorPaletteItemRolloverVerbEntryUI~	0x14880158
+EditorPaintPaletteSubcategoryUI~	0x1A43A8E7
+GlobalUISpace~	0x1E453B88
+AdventureEditorPaletteVehicleSlotUI~	0x20C2D857
+AdventureEditorPaletteEffectSlotUI~	0x2646AE28
+AdventureEditorAdvancedBehaviourEntryUI~	0x2A5EF353
+EditorComplexityMeterCreativityKillerUI~	0x2793D3E9
+AdventureTerraformPaletteWeatherUI~	0x2ABCD1F0
+PartDiscoveryUI~	0x2D2EB184
+HutHoverButtonsUI~	0x2EFD42B4
+AdventureEditorMetadataUI~	0x3109197D
+MyCollectionsCellUI~	0x375E8335
+AdventureEditorFrameUI~	0x396F69F5
+AdventureEditorPaletteMediumPlantSlotUI~	0x3B0AC2C4
+PlannerBuildingPurchaseUI~	0x4F087663
+GlobalUIAdventure~	0x526920C3
+EditorFrameUI~	0x5B168EB1
+GlobalUICreature~	0x5ED10964
+EditorPaintPaletteThemesCategoryUI~	0x6575CDB2
+EditorSocialVerbIconUI~	0x68E93C2B
+GlobalUICivilization~	0x6A6CE68B
+CaptainEditorStatMetersUI~	0x6DD7DE95
+AdventureEditorPaletteBuildingSlotUI~	0x6F8B1DEF
+AdventureEditorCaptainGoalsInfoUI~	0x709CBC09
+AdventureEditorActInfoBarUI~	0x7250E3A1
+EditorCurrencyMeterUI~	0x734D3BA1
+AdventureEditorPaletteCreatureSlotUI~	0x74F95D5C
+GlobalUITribe~	0x7A7D0EB8
+EditorMetadataUI~	0x80C5E3C3
+PlannerMetadataUI~	0x81C67B30
+LoginProgressUI~	0x834B03AF
+AdventureEditorPaletteFixedObjectSlotUI~	0x8679192D
+LoginEntryUI~	0x880BE64
+AdventureEditorEndTextEditorUI~	0x8DDC5DAC
+SpaceCaptainInfoUI~	0x9831B38F
+GlobalUIPauseAdventure~	0x9DB9E495
+EditorPalettePageArrowsUI~	0xB0039D21
+CaptainEditorFrameUI~	0xBB4BC487
+AdventureEditorPaletteGameplayObjectSlotUI~	0xBBDA757A
+EditorAbilityVerbIconUI~	0xBED39F24
+AdventureEditorComplexityMeterCreativityKillerUI~	0xC01318C2
+AdventureEditorStartTextEditorUI~	0xD492676D
+AdventureTerraformPaletteFloraUI~	0xD5521361
+AdventureActGoalsUI~	0xF8D70D51
 adventurerAbsorptionShield
 
 adventurerBattleArmor
@@ -78712,7 +78712,7 @@ Groob
 Furry
 Gooplet
 Nog
-Anticipaste
+anticipaste
 Gibolobs
 Dunebug
 DivaBette
@@ -78721,7 +78721,7 @@ Bimingo
 Ozmo
 Bariquill
 Monkeydoob
-Brainer
+brainer
 Blinks
 Tweetor
 Blissp
@@ -78739,7 +78739,7 @@ Birdy
 Beeoh
 Croctopus
 Dograffe
-Zurb
+zurb
 Gork
 Flitt
 Adventurer_AbsorptionShield
@@ -78863,7 +78863,7 @@ origami_5
 Nosey
 Doublebeak
 Doublebuddy
-Bulldogtopus
+BullDogtopus
 Doogle
 Dooble
 Symph
@@ -78876,10 +78876,10 @@ Jackylope
 Quinals
 Shaell
 Phant
-Ancillius
+ancillius
 Flamingula
 Borng
-Tikimoonsta
+tikimoonsta
 Skyles
 Th'chack
 Elmakt
@@ -78897,14 +78897,14 @@ Jergen
 K'thint
 Flimp
 Babs
-Ferpu
+ferpu
 Bumblebee
 Blind Ozzie
 Oogie
 Dakertor
 Singwon
-Chuchoko
-Six-EyedBob
+chuchoko
+Six-eyedBob
 TRG_attack_hut_axe_stroke
 CIV_epicAttack_stomp
 CI_mallet
@@ -80847,12 +80847,12 @@ Taupriberia
 Pileon
 Cargo Hold
 V-Fighter
-Kabutomushi
+kabutomushi
 Fildor
 Starter
 Toro
 Space Fighter
-Kriktosian_Slayer
+KriKtosian_Slayer
 Long Tail
 Psygnus
 Double Saucer
@@ -80869,7 +80869,7 @@ WaponiWoo
 From Sea To Space
 Pengu
 Bronzefly
-ColorOfMoney
+ColorofMoney
 Blackbird
 The Arkimedes
 Pick-Up Truck
@@ -80896,8 +80896,8 @@ Penitent Prophet
 Sequester
 Floral Skiff
 Mustang
-TowerOfAirship
-ShockAndAwe
+TowerofAirship
+ShockandAwe
 Wasp
 Blood Skipper
 Music Airship
@@ -80919,7 +80919,7 @@ Tiphany
 TheInspector
 RubelliteFighter
 Paddleplane
-WillowWanderer
+Willowwanderer
 Scuba Tank
 Quadriprop
 Delivery Truck
@@ -80932,7 +80932,7 @@ OShuttle
 Merry Monk
 Harmonious Helper
 Viking Drums
-Vulture
+VULTURE
 Scootastic
 Green Tank
 YoHoHo
@@ -83745,8 +83745,8 @@ crt
 bld
 vcl
 UserColorTuning
-Plutonian_Destroyer_Vr5
-Neutron_Slayer_V26
+Plutonian_Destroyer_vr5
+NeuTron_Slayer_V26
 compass
 backdrop
 patcher
@@ -86117,7 +86117,7 @@ sg_rare_treasure_10
 FE_mountains2_Lt6
 FE_mountains1_Lt5
 FE_mountains3_Lt4
-FE_cube1_LtBig10
+FE_cube1_Ltbig10
 FE_cube2_Lt13
 FE_cube3_Lt12
 FE_rivers1_Lt9
@@ -86678,7 +86678,7 @@ TRG_NPC_Epic_Predator2
 TRG_StarterCreatureHerbivores
 TRG_StarterCreatureOmnivores
 TRG_StarterCreatureCarnivores
-singer_03
+Singer_03
 singer_ape
 singer_handwalker
 singer_bighead
@@ -112633,7 +112633,7 @@ EC_SnailVehicle
 EC_TransformVehicle
 EC_TriShooter
 EC_secretTradingSub
-AceCombat
+acecombat
 EC cricket land vehicle
 DoILookLikeImSmiling_
 SG_asteroids
@@ -125208,3 +125208,299 @@ ItemModifiers
 LoadoutsUI
 FE_PracticeGroupLobby
 SPG-badge_Captain_00
+
+bubble_trg2civ_economic_silly
+bubble_trg2civ_economic_suggestion1
+bubble_trg2civ_economic_suggestion2
+bubble_trg2civ_military_silly
+bubble_trg2civ_military_suggestion1
+bubble_trg2civ_military_suggestion2
+bubble_trg2civ_religious_silly
+bubble_trg2civ_religious_suggestion1
+bubble_trg2civ_religious_suggestion2
+civ_chat_icon_asterisk
+civ_chat_icon_boat
+civ_chat_icon_cube
+civ_chat_icon_omnivore
+civ_chat_icon_plumbbob
+tribe_chat_icon_unicorn
+bubble_trg2civ_religious_icon
+bubble_trg2civ_economic_icon
+bubble_trg2civ_military_icon
+AssembledContentStrs~	0x04DC2F94
+AssembledContentStrs_AssembledCSA~	0x056805f2
+gameEffects_11~	0x4045020b
+options~	0x40470000
+options_config~	0x40470100
+options_config_1~	0x40470101
+options_config_2~	0x40470102
+options_config_3~	0x40470103
+options_config_4~	0x40470104
+options_config_5~	0x40470105
+options_config_6~	0x40470106
+options_config_7~	0x40470107
+options_config_8~	0x40470108
+options_config_9~	0x40470109
+options_config_10~	0x4047010a
+options_config_11~	0x4047010b
+options_config_12~	0x4047010c
+options_config_13~	0x4047010d
+options_config_14~	0x4047010e
+options_config_15~	0x4047010f
+options_config_16~	0x40470110
+options_config_17~	0x40470111
+options_config_18~	0x40470112
+options_config_19~	0x40470113
+options_config_20~	0x40470114
+options_config_21~	0x40470115
+options_config_22~	0x40470116
+options_config_23~	0x40470117
+options_config_24~	0x40470118
+options_config_25~	0x40470119
+options_config_26~	0x4047011a
+options_config_27~	0x4047011b
+options_config_28~	0x4047011c
+options_config_29~	0x4047011d
+options_config_30~	0x4047011e
+options_config_31~	0x4047011f
+options_config_32~	0x40470120
+options_config_33~	0x40470121
+options_config_34~	0x40470122
+options_config_35~	0x40470123
+options_config_36~	0x40470124
+options_config_37~	0x40470125
+options_config_38~	0x40470126
+options_config_39~	0x40470127
+options_config_40~	0x40470128
+options_config_41~	0x40470129
+options_config_42~	0x4047012a
+options_config_43~	0x4047012b
+options_config_44~	0x4047012c
+options_config_45~	0x4047012d
+options_config_46~	0x4047012e
+options_config_47~	0x4047012f
+options_config_48~	0x40470130
+options_config_49~	0x40470131
+options_config_50~	0x40470132
+options_config_51~	0x40470133
+options_config_52~	0x40470134
+options_config_53~	0x40470135
+options_config_54~	0x40470136
+options_config_55~	0x40470137
+options_config_56~	0x40470138
+options_config_57~	0x40470139
+options_config_58~	0x4047013a
+options_config_59~	0x4047013b
+options_config_60~	0x4047013c
+editor_texture~	0x40602100
+editor_modelLOD~	0x40602600
+editor_playmodeMisc~	0x40607300
+editor_animButton~	0x40607a00
+editor_playmodemodels~	0x40607f00
+editor_playmodepanels~	0x4060e000
+editor_playmodeanims~	0x4060e100
+game_asset~	0x40802000
+planet_artDirected_1~	0x4084a201
+planet_spaceT1A0_1~	0x4084a601
+planet_specialUse~	0x4084af00
+planet_specialUse_1~	0x4084af01
+scenario_config~	0x408a0100
+ac_Barogan House 1
+ac_Barogan House2
+ac_Barogan House3
+ac_Daruba Hall
+ac_Sygar Hall
+Ancient Chinese City Hall
+Chinese City Hall
+SPKmushroom CitiHall
+Tree City CitiHall
+ac_Barogan diner
+Chinese Bar
+Chinese Restaurant
+SPKmushroom bar
+Chinese Factory
+Robotown House
+Chinese House
+NeutralCell_04
+NeutralCell_05
+NeutralCell_06
+NeutralCell_07
+NeutralCell_08
+NeutralCell_09
+NeutralCell_10
+NeutralCell_11
+NeutralCell_12
+NeutralCell_13
+NeutralCell_14
+NeutralCell_15
+NeutralCell_cilia_01
+ac_chuchoko
+ac_firanewt
+ac_kymiera
+ac_zahilla
+AntlerGuy
+Antlion
+Antlioness
+Archibaldy
+ArizonaCrab
+Beezus
+BlindOzzie
+Dr
+Fenster
+Glutz
+Greevil
+Hetchikus
+Jeeves
+jeubles
+kymieran
+LetterC
+Maschivellius
+Mephistopheles
+Plumpkin
+prey_lg_sklurge
+Ricola
+Riptor
+Shifty
+Singer_01
+Singer_02
+Singer_birdy
+Singer_bumblebee
+Singer_DoubleBeak
+Singer_Doublebuddy
+Singer_Dunebug
+Singer_Gork1
+Singer_Gorkbuddy
+strangelove
+VonStoomp
+vunderlich
+witchita
+zahillga
+FE_crystal1_Lp
+FE_crystal3_Lp
+FE_large_1_5x_f
+FE_large_2x_f
+FE_large_3x_f
+FE_crystalM1_Lp
+FE_crystalM2_Lp
+FE_crystalM3_Lp
+FE_earthM3_Lp
+FE_shitaakeM1_Lp
+FE_shitaakeM1_Mp
+FE_shitaakeM1_Sp
+FE_shitaakeM2_Lp
+FE_shitaakeM2_Mp
+FE_shitaakeM2_Sp
+FE_shitaakeM3_Lp
+FE_shitaakeM3_Mp
+FE_shitaakeM3_Sp
+Blue Goo Economic Flyer
+Blue Goo Economic Land
+Blue Goo Economic Water
+DefaultHarvester
+ac EcHornisse Military Air Vehicle
+Blue Goo Attack Flyer
+ac-stealthfish
+Blue Goo Attack Land
+Blue Goo Attack Water
+Blue Goo Cultural Flyer
+Blue Goo Cultural Land
+ac-deathmetal
+ac-floralskiff
+ac-nessie
+ac-steelwasp
+ac-swampskipper
+ac-vikingdrums
+Blue Goo Cultural Water
+Kadents
+cg_unlock_part_rock
+cell_food_L3a
+cell_airbubble_texture_blurring_strip
+be_light_05_editor
+be_light_06_editor
+be_light_07_editor
+be_light_08_editor
+be_light_13_editor
+be_light_14_editor
+be_light_15_editor
+be_light_16_editor
+ta_shoulders_06_ribbons
+ta_shoulders_03_ribbons
+ta_shoulders_01_ribbons
+moonrocks_ice_2x2
+dietycomplex_tin
+dietycomplex_bronze
+dietycomplex_copper
+dietycomplex_gold
+dietycomplex_platinum
+DDFMap
+palette_block~	0x406B7400
+palette_blockpainttheme~	0x406B7900
+moonrocks_4x4
+terrainSystem_script~	0x40A00200
+Gonzago~	0x00ebb801
+Space_0x01103192~	0x01103192
+Space_0x01103193~	0x01103193
+CreatureAnimViewer~	0x015e1019
+CreatureTestMode~	0x03d437f9
+GameCinematics~	0x8916f92d
+Creature_0xb03af999~	0xb03af999
+testMap1bit~	0x021566c2
+crowdPosSmile~	0x021d5e5e
+crowdPosLove~	0x021d5e5f
+fire_pattern~	0x02427edd
+raggedellipse-textureMap~	0x2fac0a7e
+raggedcircle-textureMap~	0x4fac23f6
+debug_colormap~	0x8eee7886
+groundcover_color_map~	0xceee766d
+test_galaxy_lod~	0xcf3c14b8
+swarm_map~	0xef472b5d
+sky_table_air_0x05359c50~	0x05359c50
+sky_table_air_0x05359c51~	0x05359c51
+sky_table_air_0x05359c52~	0x05359c52
+sky_table_air_0x05359c53~	0x05359c53
+sky_table_air_0x05359c54~	0x05359c54
+sky_table_air_0x05359c55~	0x05359c55
+sky_table_air_0x05359c56~	0x05359c56
+sky_table_air_0x05359c57~	0x05359c57
+sky_table_air_0x05359c58~	0x05359c58
+sky_table_air_0x05359c59~	0x05359c59
+sky_table_air_0x05359c5a~	0x05359c5a
+sky_table_air_0x05359c5b~	0x05359c5b
+sky_table_air_0x05359c5c~	0x05359c5c
+sky_table_air_0x05359c5d~	0x05359c5d
+sky_table_air_0x05359c5e~	0x05359c5e
+sky_table_air_0x05359c5f~	0x05359c5f
+water_particle_table_primary_0x0536dd50~	0x0536dd50
+water_particle_table_primary_0x0536dd51~	0x0536dd51
+water_particle_table_primary_0x0536dd52~	0x0536dd52
+water_particle_table_primary_0x0536dd53~	0x0536dd53
+water_particle_table_primary_0x0536dd54~	0x0536dd54
+water_particle_table_primary_0x0536dd55~	0x0536dd55
+water_particle_table_primary_0x0536dd56~	0x0536dd56
+water_particle_table_primary_0x0536dd57~	0x0536dd57
+water_particle_table_primary_0x0536dd58~	0x0536dd58
+water_particle_table_primary_0x0536dd59~	0x0536dd59
+water_particle_table_primary_0x0536dd5a~	0x0536dd5a
+water_particle_table_primary_0x0536dd5b~	0x0536dd5b
+water_particle_table_primary_0x0536dd5c~	0x0536dd5c
+water_particle_table_primary_0x0536dd5d~	0x0536dd5d
+water_particle_table_primary_0x0536dd5e~	0x0536dd5e
+water_particle_table_primary_0x0536dd5f~	0x0536dd5f
+gRob~	0x04c83b35
+Armada ZX+A(4294921781)~	0x0487b291
+Atlas(300000040887)~	0x04bafe4e
+fourposter(300000027455)~	0x04bafe3e
+Galaxy Cruiser(300000055960)~	0x04bafe45
+lounger(300000001288)~	0x04bafe4b
+Moon and Stars(300000032444)~	0x04bafe3f
+TitaniumSaucer(4294929829)~	0x04bafe43
+ac EC1 Economic Land ~	0x04adad6a
+ac_EC jet Vehicle~	0xe44e1933
+AC_ECRace Land Vehicle~	0x676c619d
+ac EC cricket truck~	0x04ac7908
+RockSmasher~	0x05137c77
+airculty~	0x0542d0c6
+scarab~	0x0541dd83
+ac ECant Religious Land ~	0x04adad70
+ac_DemonDog~	0x563ff9bd
+CRG_SummonFlock~	0x6B4BCD8A
