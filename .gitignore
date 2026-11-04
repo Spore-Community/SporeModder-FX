@@ -78,3 +78,4 @@ dependency-reduced-pom.xml
 /config.properties
 _Build.bat
 .settings/org.eclipse.jdt.core.prefs
+ProjectLastActiveTimes.txt
