@@ -471,7 +471,7 @@ public class SporeUserInterface {
 		);
 
 		cSPUIStdDrawable drawable = designer.createElementWithDefaults(cSPUIStdDrawable.class);
-		drawable.setScaleType(cSPUIStdDrawable.TILE_CENTER);
+		drawable.setScaleType(IDrawable.TILE_CENTER);
 		drawable.getScaleArea().set(0.333f, 0.333f, 0.333f, 0.333f);
 
 		for (int i = 0; i < 8; i++) {

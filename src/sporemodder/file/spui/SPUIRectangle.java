@@ -98,12 +98,20 @@ public class SPUIRectangle {
 		y2 += dy;
 		return this;
 	}
-	
+
 	public SPUIRectangle translate(double dx, double dy) {
 		x1 += dx;
 		y1 += dy;
 		x2 += dx;
 		y2 += dy;
+		return this;
+	}
+
+	public SPUIRectangle scale(double dx, double dy) {
+		x1 *= dx;
+		y1 *= dy;
+		x2 *= dx;
+		y2 *= dy;
 		return this;
 	}
 	

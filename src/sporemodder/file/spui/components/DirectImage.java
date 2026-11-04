@@ -35,7 +35,9 @@ import javafx.scene.paint.Color;
 import sporemodder.HashManager;
 import sporemodder.file.ResourceKey;
 import sporemodder.file.spui.InspectableObject;
+import sporemodder.file.spui.SPUIRectangle;
 import sporemodder.file.spui.SpuiWriter;
+import sporemodder.util.Vector2;
 import sporemodder.view.editors.SpuiEditor;
 import sporemodder.view.editors.spui.SpuiPropertyAction;
 import sporemodder.view.inspector.InspectorReferenceLink;
@@ -91,13 +93,20 @@ public class DirectImage extends InspectableObject implements ISporeImage {
 		return image == null ? 1 : (float) image.getHeight();
 	}
 
+	public Vector2 getSize() {
+		return new Vector2(getWidth(), getHeight());
+	}
+
 	@Override
-	public void drawImage(GraphicsContext graphics, double sx, double sy, double sw, double sh, double dx, double dy,
+	public boolean drawImage(GraphicsContext graphics, double sx, double sy, double sw, double sh, double dx, double dy,
 			double dw, double dh, Color shadeColor) {
 		if (sx < 0) sx = 0;
 		if (sy < 0) sy = 0;
 		
 		if (image == null) {
+			if (shadeColor.getOpacity() <= 0)
+				return false;
+
 			graphics.setFill(shadeColor);
 			graphics.fillRect(dx, dy, dw, dh);
 		} else if ((shadeColor.getRed() >= 1)
@@ -152,6 +161,7 @@ public class DirectImage extends InspectableObject implements ISporeImage {
 
 			graphics.drawImage(tintedImage, 0, 0, sw, sh, dx, dy, dw, dh);
 		}
+		return true;
 	}
 
 	private void setImageView(ImageView imageView, ScrollPane scrollPane) {
@@ -215,16 +225,25 @@ public class DirectImage extends InspectableObject implements ISporeImage {
 	}
 
 
-	// Showing the whole key takes too much space, so omit the folder
-	@Override public String getLinkString() {
-		return HashManager.get().getFileName(key.getInstanceID()) + '.' + HashManager.get().getTypeName(key.getTypeID());
+	@Override
+	public String getLinkString() {
+		HashManager hm = HashManager.get();
+		// Showing the whole key takes too much space, so omit the folder
+		return hm.getFileName(key.getInstanceID()) + '.' + hm.getTypeName(key.getTypeID());
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return getLinkString();
 	}
 
-	@Override public String getImageListString() {
+	@Override
+	public String getInspectorLabel() {
 		return HashManager.get().getFileName(key.getGroupID()) + '!' + getLinkString();
+	}
+
+	@Override
+	public boolean drawInspectorIcon(GraphicsContext graphics, SPUIRectangle area) {
+		return ISporeImage.drawImage(graphics, this, area, Color.WHITE, false);
 	}
 }

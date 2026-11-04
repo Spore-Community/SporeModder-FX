@@ -18,10 +18,9 @@
 ****************************************************************************/
 package sporemodder.file.spui.components;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import sporemodder.file.spui.SPUIRectangle;
-import sporemodder.file.spui.SporeUserInterface;
-import sporemodder.file.spui.SpuiViewer;
 import sporemodder.util.Vector2;
 
 public class cSPUIStdDrawable extends StdDrawable {
@@ -61,71 +60,80 @@ public class cSPUIStdDrawable extends StdDrawable {
 			default: break;
 		}
 	}
-	
-	@Override public void paint(IWindow window, SpuiViewer viewer) {
-		int index = SporeUserInterface.getImageIndex(window);
+
+
+	@Override
+	public boolean paintInternal(GraphicsContext graphics, int index, SPUIRectangle area, Color shadeColor) {
 		cSPUIStdDrawableImageInfo image = getImage(index);
-		if (image == null) image = image0;
-		
-		if (image != null) {
-			SPUIRectangle windowArea = window.getRealArea();
-			
-			SPUIRectangle area = new SPUIRectangle();
-			area.x1 = image.backgroundOffset.getX() + windowArea.x1;
-			area.y1 = image.backgroundOffset.getY() + windowArea.y1;
-			// Are we sure it works like this? Maybe it tiles it
-			area.x2 = area.x1 + image.backgroundScale.getX() * windowArea.getWidth();
-			area.y2 = area.y1 + image.backgroundScale.getY() * windowArea.getHeight();
-			
-			if (image.backgroundImage != null) {
-				//ISporeImage.drawImage(viewer.getGraphicsContext2D(), image.backgroundImage, area, image.backgroundColor);
-				Color newShadeColor = window.getShadeColor();
-				if ((image != null) && (image.backgroundColor != null))
-					newShadeColor = ISporeImage.multiplyColor(image.backgroundColor, window.getShadeColor());
-					/*newShadeColor = new Color(window.getShadeColor().getRed() / image.backgroundColor.getRed(),
-							window.getShadeColor().getGreen() / image.backgroundColor.getGreen(),
-							window.getShadeColor().getBlue() / image.backgroundColor.getBlue(),
-							window.getShadeColor().getOpacity() / image.backgroundColor.getOpacity());*/
-				
-				if (scaleType == STRETCH_IMAGE) {
-					ISporeImage.drawImage(viewer.getGraphicsContext2D(), image.backgroundImage, area, newShadeColor);
-				}
-				else if (scaleType == STRETCH_CENTER) {
-					ISporeImage.drawImageSliced(viewer.getGraphicsContext2D(), image.backgroundImage, false, area, scaleArea, newShadeColor);
-				}
-				else if (scaleType == TILE_IMAGE) {
-					ISporeImage.drawImageTiled(viewer.getGraphicsContext2D(), image.backgroundImage, area, newShadeColor);
-				}
-				else if (scaleType == TILE_CENTER) {
-					ISporeImage.drawImageSliced(viewer.getGraphicsContext2D(), image.backgroundImage, true, area, scaleArea, newShadeColor);
-				}
-			}
-			
-			ISporeImage iconImage = image.iconImage;
-			
-			if (iconImage == null) {
-				// Sometimes only the first one is specified
-				if (image0 != null) iconImage = image0.iconImage;
-			}
-			
-			if (iconImage != null) {
-				SPUIRectangle iconArea = new SPUIRectangle();
-				iconArea.setWidth(iconImage.getWidth() * image.iconScale.getX());
-				iconArea.setHeight(iconImage.getHeight() * image.iconScale.getY());
-				
-				float h = (area.getWidth() - iconArea.getWidth()) / 2;
-				float v = (area.getHeight() - iconArea.getHeight()) / 2;
-				iconArea.translateX(area.x1 + h + image.iconOffset.getX());
-				iconArea.translateY(area.y1 + v + image.iconOffset.getY());
-				
-				ISporeImage.drawImage(viewer.getGraphicsContext2D(), iconImage, iconArea, image.iconColor);
-			}
-		}
+		if (image == null)
+			image = image0;
+
+		if (image == null)
+			return false;
+
+
+		SPUIRectangle backgroundArea = new SPUIRectangle();
+
+		Vector2 backgroundOffset = image.backgroundOffset;
+		backgroundArea.x1 = backgroundOffset.getX() + area.x1;
+		backgroundArea.y1 = backgroundOffset.getY() + area.y1;
+
+		Vector2 backgroundScale = image.backgroundScale;
+		// Are we sure it works like this? Maybe it tiles it
+		backgroundArea.x2 = backgroundArea.x1 + backgroundScale.getX() * area.getWidth();
+		backgroundArea.y2 = backgroundArea.y1 + backgroundScale.getY() * area.getHeight();
+
+
+		boolean backgroundPainted = paintBackground(graphics, image, backgroundArea, shadeColor);
+		boolean iconPainted = paintIcon(graphics, image, backgroundArea, shadeColor);
+		return backgroundPainted || iconPainted;
 	}
-	
+
+
+	boolean paintBackground(GraphicsContext graphics, cSPUIStdDrawableImageInfo image, SPUIRectangle backgroundArea, Color shadeColor) {
+		ISporeImage backgroundImage = image.backgroundImage;
+		if (backgroundImage == null)
+			return false;
+
+		Color newShadeColor = ISporeImage.multiplyColor(image.backgroundColor, shadeColor);
+		return ISporeImage.drawImage(graphics, backgroundImage, backgroundArea, newShadeColor, scaleType, scaleArea);
+	}
+
+
+	boolean paintIcon(GraphicsContext graphics, cSPUIStdDrawableImageInfo image, SPUIRectangle backgroundArea, Color shadeColor) {
+		ISporeImage iconImage = image.iconImage;
+		if ((iconImage == null) && (image0 != null)) {
+			// Sometimes only the first one is specified
+			iconImage = image0.iconImage;
+		}
+
+		if (iconImage == null)
+			return false;
+
+		SPUIRectangle iconArea = new SPUIRectangle();
+		iconArea.setWidth(iconImage.getWidth() * image.iconScale.getX());
+		iconArea.setHeight(iconImage.getHeight() * image.iconScale.getY());
+		
+		float h = (backgroundArea.getWidth() - iconArea.getWidth()) / 2;
+		float v = (backgroundArea.getHeight() - iconArea.getHeight()) / 2;
+		iconArea.translateX(backgroundArea.x1 + h + image.iconOffset.getX());
+		iconArea.translateY(backgroundArea.y1 + v + image.iconOffset.getY());
+		
+		Color newShadeColor = ISporeImage.multiplyColor(image.iconColor, shadeColor);
+		return ISporeImage.drawImage(graphics, iconImage, iconArea, newShadeColor);
+	}
+
+
 	@Override public Vector2 getDimensions(int imageIndex) {
 		cSPUIStdDrawableImageInfo info = getImage(imageIndex);
 		if (info == null || info.backgroundImage == null) return super.getDimensions(imageIndex);
 		return new Vector2(info.backgroundImage.getWidth(), info.backgroundImage.getHeight());
+	}
+
+	@Override ISporeImage getInspectorNamesakeImage() {
+		return image0 != null
+			? image0.backgroundImage
+			: null
+		;
 	}
 }

@@ -18,15 +18,14 @@
 ****************************************************************************/
 package sporemodder.file.spui.components;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import sporemodder.file.spui.SPUIRectangle;
 import sporemodder.file.spui.SporeUserInterface;
-import sporemodder.file.spui.SpuiViewer;
 import sporemodder.util.Vector2;
 
 public class ImageDrawable extends IDrawable {
-	
-	public static final int TILING_NONE = 0;
-	public static final int TILING_STANDARD = 1;
-	public static final int TILING_EDGE = 2;
+	static final Borders _BORDERS = new Borders(0.333f, 0.333f, 0.333f, 0.333f);
 	
 	private ISporeImage image;
 	private final OutlineFormat imageOutline = new OutlineFormat();
@@ -36,19 +35,9 @@ public class ImageDrawable extends IDrawable {
 	private int tiling;
 	private float scale = 1.0f;
 	
-	@Override public void paint(IWindow window, SpuiViewer viewer) {
-		//TODO use alignment for something
-		if (image != null) {
-			if (tiling == TILING_EDGE) {
-				ISporeImage.drawImageSliced(viewer.getGraphicsContext2D(), image, false, window.getRealArea(), new Borders(0.333f, 0.333f, 0.333f, 0.333f), window.getShadeColor());
-			}
-			else if (tiling == TILING_STANDARD) {
-				ISporeImage.drawImageTiled(viewer.getGraphicsContext2D(), image, window.getRealArea(), window.getShadeColor());
-			}
-			else {
-				ISporeImage.drawImage(viewer.getGraphicsContext2D(), image, window.getRealArea(), window.getShadeColor());
-			}
-		}
+	@Override public boolean paint(GraphicsContext graphics, SPUIRectangle area, Color color) {
+		ISporeImage.drawTilingImage(graphics, image, area, color, tiling, _BORDERS);
+		return true;
 	}
 	
 	@Override public Vector2 getDimensions(int imageIndex) {
@@ -56,11 +45,7 @@ public class ImageDrawable extends IDrawable {
 		return new Vector2(image.getWidth(), image.getHeight());
 	}
 
-	@Override public String toString() {
-		String ret = super.toString();
-		if (image != null)
-			ret += " (" + image.toString() + ')';
-
-		return ret;
+	@Override ISporeImage getInspectorNamesakeImage() {
+		return image;
 	}
 }

@@ -18,21 +18,15 @@
 ****************************************************************************/
 package sporemodder.view.editors.spui;
 
-import javafx.scene.control.TreeCell;
+import java.util.List;
+
 import sporemodder.file.spui.components.ISporeImage;
 
-public class SpuiImageItemCell extends TreeCell<ISporeImage> {
-	
-	@Override protected void updateItem(ISporeImage item, boolean empty) {
-		super.updateItem(item, empty);
-		setGraphic(null);
-		
-		if (empty || item == null) {
-			setText(null);
-		}
-		else {
-			setText(item.getImageListString());
-			getStyleClass().setAll("tree-cell", "spui-editor-item-window");
-		}
-	}
+public class SpuiImageItemCell extends SpuiGraphicTreeCell<ISporeImage> {
+    @Override
+	public List<String> getStyleClasses() {
+        List<String> classes = super.getStyleClasses();
+		classes.add("spui-editor-image-item");
+		return classes;
+    }
 }

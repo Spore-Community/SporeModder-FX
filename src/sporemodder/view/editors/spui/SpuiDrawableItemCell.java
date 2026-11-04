@@ -18,22 +18,14 @@
 ****************************************************************************/
 package sporemodder.view.editors.spui;
 
-import javafx.scene.control.TreeCell;
+import java.util.List;
 import sporemodder.file.spui.components.IDrawable;
-import sporemodder.file.spui.components.ISporeImage;
 
-public class SpuiDrawableItemCell extends TreeCell<IDrawable> {
-	
-	@Override protected void updateItem(IDrawable item, boolean empty) {
-		super.updateItem(item, empty);
-		setGraphic(null);
-		
-		if (empty || item == null) {
-			setText(null);
-		}
-		else {
-			setText(item.toString());
-			getStyleClass().setAll("tree-cell", "spui-editor-item-window");
-		}
-	}
+public class SpuiDrawableItemCell extends SpuiGraphicTreeCell<IDrawable> {
+    @Override
+	public List<String> getStyleClasses() {
+        List<String> classes = super.getStyleClasses();
+		classes.add("spui-editor-image-item");
+		return classes;
+    }
 }
