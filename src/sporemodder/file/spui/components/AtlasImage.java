@@ -18,6 +18,8 @@
 ****************************************************************************/
 package sporemodder.file.spui.components;
 
+import java.text.DecimalFormat;
+
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -30,6 +32,7 @@ import sporemodder.file.spui.SPUIRectangle;
 import sporemodder.file.spui.SpuiElement;
 import sporemodder.file.spui.SpuiWriter;
 import sporemodder.file.spui.uidesigner.DesignerProperty;
+import sporemodder.util.Vector2;
 import sporemodder.view.editors.SpuiEditor;
 import sporemodder.view.editors.spui.SpuiPropertyAction;
 import sporemodder.view.editors.spui.SpuiUVEditor;
@@ -57,6 +60,10 @@ public class AtlasImage extends SpuiElement implements ISporeImage {
 	public float getHeight() {
 		return dimensions[1];
 	}
+
+	public Vector2 getSize() {
+		return new Vector2(getWidth(), getHeight());
+	}
 	
 	public DirectImage getAtlas() {
 		return atlas;
@@ -72,41 +79,41 @@ public class AtlasImage extends SpuiElement implements ISporeImage {
 	}
 
 	@Override
-	public void drawImage(GraphicsContext graphics, double sx, double sy, double sw, double sh, double dx, double dy,
+	public boolean drawImage(GraphicsContext graphics, double sx, double sy, double sw, double sh, double dx, double dy,
 			double dw, double dh, Color shadeColor) {
 		
 		if (atlas == null) {
 			graphics.setFill(Color.WHITE);
 			graphics.fillRect(dx, dy, dw, dh);
+			return true;
 		}
-		else {
-			double w = getWidth();
-			double h = getHeight();
-			double aw = atlas.getWidth();
-			double ah = atlas.getHeight();
-			
-			// Converts width and height to [0, 1] range
-			double relativeWidth = sw / w;
-			double relativeHeight = sh / h;
-			// Applies the UV coordinates, still in [0, 1] range but now relative to whole atlas
-			relativeWidth *= uvCoordinates.getWidth();
-			relativeHeight *= uvCoordinates.getHeight();
-			// Multiply by atlas size to get in atlas coordinates
-			sw = relativeWidth * aw;
-			sh = relativeHeight * ah;
-			
-			// X, Y in range [0, 1] in fragment space
-			double relativeX = sx / w;
-			double relativeY = sy / h;
-			// Now convert X, Y into atlas space, relative to image start
-			relativeX = relativeX * (w / aw);
-			relativeY = relativeY * (h / ah);
-			// Add uvCoordinates and multiply by atlas size to convert into atlas coordinates
-			sx = atlas.getWidth() * (uvCoordinates.x1 + relativeX);
-			sy = atlas.getHeight() * (uvCoordinates.y1 + relativeY);
-			
-			atlas.drawImage(graphics, sx, sy, sw, sh, dx, dy, dw, dh, shadeColor);
-		}
+
+		double w = getWidth();
+		double h = getHeight();
+		double aw = atlas.getWidth();
+		double ah = atlas.getHeight();
+		
+		// Converts width and height to [0, 1] range
+		double relativeWidth = sw / w;
+		double relativeHeight = sh / h;
+		// Applies the UV coordinates, still in [0, 1] range but now relative to whole atlas
+		relativeWidth *= uvCoordinates.getWidth();
+		relativeHeight *= uvCoordinates.getHeight();
+		// Multiply by atlas size to get in atlas coordinates
+		sw = relativeWidth * aw;
+		sh = relativeHeight * ah;
+		
+		// X, Y in range [0, 1] in fragment space
+		double relativeX = sx / w;
+		double relativeY = sy / h;
+		// Now convert X, Y into atlas space, relative to image start
+		relativeX = relativeX * (w / aw);
+		relativeY = relativeY * (h / ah);
+		// Add uvCoordinates and multiply by atlas size to convert into atlas coordinates
+		sx = atlas.getWidth() * (uvCoordinates.x1 + relativeX);
+		sy = atlas.getHeight() * (uvCoordinates.y1 + relativeY);
+		
+		return atlas.drawImage(graphics, sx, sy, sw, sh, dx, dy, dw, dh, shadeColor);
 	}
 
 	@Override public void addComponents(SpuiWriter writer) {
@@ -239,5 +246,55 @@ public class AtlasImage extends SpuiElement implements ISporeImage {
 	
 	public int[] getDimensions() {
 		return dimensions;
+	}
+
+	static final DecimalFormat editorUVDisplayFormat = new DecimalFormat("#.###");
+
+	static String editorDisplayFormat2Floats(float a, float b) {
+		return editorUVDisplayFormat.format(a) + ',' + editorUVDisplayFormat.format(b);
+	}
+
+	private String getUVString() {
+		SPUIRectangle uv = getUVCoordinates();
+		float x1 = uv.x1;
+		float x2 = uv.x2;
+		float y1 = uv.y1;
+		float y2 = uv.y2;
+		if (atlas != null) {
+			float w = atlas.getWidth();
+			x1 *= w;
+			x2 *= w;
+
+			float h = atlas.getHeight();
+			y1 *= h;
+			y2 *= h;
+		}
+		return editorDisplayFormat2Floats(x1, y1) + ',' + editorDisplayFormat2Floats(x2, y2);
+	}
+
+
+	@Override public String getLinkString() {
+		String ret = "";
+		if (ret != null)
+			ret = atlas.getLinkString() + " ";
+
+		return ret + getUVString();
+	}
+	@Override public String toString() {
+		return getLinkString();
+	}
+
+
+	@Override public String getInspectorLabel() {
+		String ret = "";
+		if (ret != null)
+			ret = atlas.getInspectorLabel() + " ";
+
+		return ret + getUVString();
+	}
+
+	@Override
+	public boolean drawInspectorIcon(GraphicsContext graphics, SPUIRectangle area) {
+		return ISporeImage.drawImage(graphics, this, area, Color.WHITE, false);
 	}
 }

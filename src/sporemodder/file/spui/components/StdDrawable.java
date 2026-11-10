@@ -18,17 +18,15 @@
 ****************************************************************************/
 package sporemodder.file.spui.components;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import sporemodder.file.spui.RLEHitMask;
+import sporemodder.file.spui.SPUIRectangle;
 import sporemodder.file.spui.SporeUserInterface;
 import sporemodder.file.spui.SpuiViewer;
 import sporemodder.util.Vector2;
 
 public class StdDrawable extends IDrawable {
-	public static final int STRETCH_IMAGE = 1;
-	public static final int STRETCH_CENTER = 2;
-	public static final int TILE_IMAGE = 3;
-	public static final int TILE_CENTER = 4;
-	
 	private final ISporeImage[] image = new ISporeImage[8];
 	private RLEHitMask hitMask;  //TODO use this to detect hits
 	protected int scaleType;
@@ -36,23 +34,22 @@ public class StdDrawable extends IDrawable {
 	protected final Borders scaleArea = new Borders();
 	// outline format as well, but we don't use it
 	
-	@Override public void paint(IWindow window, SpuiViewer viewer) {
-		ISporeImage img = image[SporeUserInterface.getImageIndex(window)];
-		if (img == null) img = image[0];
-		if (img != null) {
-			if (scaleType == STRETCH_IMAGE) {
-				ISporeImage.drawImage(viewer.getGraphicsContext2D(), img, window.getRealArea(), window.getShadeColor());
-			}
-			else if (scaleType == STRETCH_CENTER) {
-				ISporeImage.drawImageSliced(viewer.getGraphicsContext2D(), img, false, window.getRealArea(), scaleArea, window.getShadeColor());
-			}
-			else if (scaleType == TILE_IMAGE) {
-				ISporeImage.drawImageTiled(viewer.getGraphicsContext2D(), img, window.getRealArea(), window.getShadeColor());
-			}
-			else if (scaleType == TILE_CENTER) {
-				ISporeImage.drawImageSliced(viewer.getGraphicsContext2D(), img, true, window.getRealArea(), scaleArea, window.getShadeColor());
-			}
-		}
+	@Override
+	public void paint(IWindow window, SpuiViewer viewer) {
+		paintInternal(viewer.getGraphicsContext2D(), SporeUserInterface.getImageIndex(window), window.getRealArea(), window.getShadeColor());
+	}
+
+	@Override
+	public boolean paint(GraphicsContext graphics, SPUIRectangle area, Color color) {
+		return paintInternal(graphics, SporeUserInterface.INDEX_IDLE, area, color);
+	}
+
+	public boolean paintInternal(GraphicsContext graphics, int index, SPUIRectangle area, Color color) {
+		ISporeImage img = image[index];
+		if (img == null)
+			img = image[index];
+
+		return ISporeImage.drawImage(graphics, img, area, color, scaleType, scaleArea);
 	}
 	
 	@Override public Vector2 getDimensions(int imageIndex) {
@@ -74,5 +71,37 @@ public class StdDrawable extends IDrawable {
 
 	public Borders getScaleArea() {
 		return scaleArea;
+	}
+
+	@Override ISporeImage getInspectorNamesakeImage() {
+		return image[0];
+	}
+
+
+	@Override
+	public boolean drawInspectorIcon(GraphicsContext graphics, SPUIRectangle area) {
+		Vector2 size = this.getSize();
+
+		double areaInitWidth = area.getWidth();
+		double areaInitHeight = area.getHeight();
+
+		double scaleX = size.getX() / areaInitWidth;
+		double scaleY = size.getY() / areaInitHeight;
+
+		if ((size.getX() <= areaInitWidth) && (size.getY() <= areaInitHeight))
+			return super.drawInspectorIcon(graphics, area);
+
+		scaleX = limitInspectorIconSize(scaleX);
+		scaleY = limitInspectorIconSize(scaleY);
+
+		graphics.scale(1d / scaleX, 1d / scaleY);
+		area.scale(scaleX, scaleY);
+		boolean result = super.drawInspectorIcon(graphics, area);
+		graphics.scale(scaleX, scaleY);
+		return result;
+	}
+
+	static double limitInspectorIconSize(double value) {
+		return Math.min(Math.max(value, 1d), 64d);
 	}
 }

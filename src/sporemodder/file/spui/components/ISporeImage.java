@@ -22,13 +22,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import sporemodder.file.spui.SPUIRectangle;
 import sporemodder.file.spui.SporeUserInterface;
+import sporemodder.view.editors.spui.ISpuiGraphicItem;
 
 /**
  * Corresponds to the designer 'image' type, an object that holds an image. This can either be a portion of an atlas image,
  * or a full image file.
  */
-public interface ISporeImage {
-	
+public interface ISporeImage extends ISpuiGraphicItem {
 	public abstract float getWidth();
 	public abstract float getHeight();
 	
@@ -45,12 +45,20 @@ public interface ISporeImage {
 	 * @param dw The destination rectangle's width.
 	 * @param dh The destination rectangle's height.
 	 */
-	public abstract void drawImage(GraphicsContext graphics, 
+	public abstract boolean drawImage(GraphicsContext graphics, 
 			double sx, double sy, double sw, double sh, 
 			double dx, double dy, double dw, double dh, Color shadeColor);
-	
-	public static void drawImage(GraphicsContext graphics, ISporeImage image, SPUIRectangle destArea, Color shadeColor) {
-		image.drawImage(graphics, 
+
+
+	public abstract String getLinkString();
+	public abstract String getInspectorLabel();
+	public abstract boolean drawInspectorIcon(GraphicsContext graphics, SPUIRectangle area);
+
+
+
+
+	public static boolean drawImage(GraphicsContext graphics, ISporeImage image, SPUIRectangle destArea, Color shadeColor) {
+		return image.drawImage(graphics, 
 				0, 0, image.getWidth(), image.getHeight(),
 				destArea.x1, destArea.y1, destArea.getWidth(), destArea.getHeight(), shadeColor);
 	}
@@ -61,12 +69,12 @@ public interface ISporeImage {
 	 * @param image
 	 * @param bounds
 	 */
-	public static void drawImageTiled(GraphicsContext graphics, ISporeImage image, SPUIRectangle bounds, Color shadeColor) {
-		drawImageTiled(graphics, image, new SPUIRectangle(0, 0, image.getWidth(), image.getHeight()), bounds, shadeColor);
+	public static boolean drawImageTiled(GraphicsContext graphics, ISporeImage image, SPUIRectangle bounds, Color shadeColor) {
+		return drawImageTiled(graphics, image, new SPUIRectangle(0, 0, image.getWidth(), image.getHeight()), bounds, shadeColor);
 	}
 	
 	//TODO use alignment
-	public static void drawImageTiled(GraphicsContext graphics, ISporeImage image, SPUIRectangle sourceBounds, SPUIRectangle bounds, Color shadeColor) {
+	public static boolean drawImageTiled(GraphicsContext graphics, ISporeImage image, SPUIRectangle sourceBounds, SPUIRectangle bounds, Color shadeColor) {
 		double width = sourceBounds.getWidth();
 		double height = sourceBounds.getHeight();
 		double currentY = bounds.y1;
@@ -80,22 +88,24 @@ public interface ISporeImage {
 				// Crop the image if it falls out of the bounds
 				double tileWidth = Math.min(bounds.x2 - currentX, width);
 				
-				image.drawImage(graphics, sourceBounds.x1, sourceBounds.y1, tileWidth, tileHeight, currentX, currentY, tileWidth, tileHeight, shadeColor);
+				if (!image.drawImage(graphics, sourceBounds.x1, sourceBounds.y1, tileWidth, tileHeight, currentX, currentY, tileWidth, tileHeight, shadeColor))
+					return false;
 				
 				currentX += tileWidth;
 			}
 			
 			currentY += tileHeight;
 		}
+		return true;
 	}
 	
-	public static void drawImageSliced(GraphicsContext graphics, ISporeImage image, boolean isTiled, 
+	public static boolean drawImageSliced(GraphicsContext graphics, ISporeImage image, boolean isTiled, 
 			SPUIRectangle area, Borders scaleArea, Color shadeColor) {
-		drawImageSliced(graphics, image, isTiled, new SPUIRectangle(0, 0, image.getWidth(), image.getHeight()),
+		return drawImageSliced(graphics, image, isTiled, new SPUIRectangle(0, 0, image.getWidth(), image.getHeight()),
 				area, scaleArea, shadeColor);
 	}
 	
-	public static void drawImageSliced(GraphicsContext graphics, ISporeImage image, boolean isTiled, 
+	public static boolean drawImageSliced(GraphicsContext graphics, ISporeImage image, boolean isTiled, 
 			SPUIRectangle sourceArea, SPUIRectangle area, Borders scaleArea, Color shadeColor) {
 		
 		SPUIRectangle center = drawSlicedEdges(graphics, image, isTiled, sourceArea, area, scaleArea, shadeColor);
@@ -110,11 +120,11 @@ public interface ISporeImage {
 		sourceBounds.y2 = sourceArea.y1 + h - scaleArea.bottom*h;
 		
 		if (isTiled) {
-			ISporeImage.drawImageTiled(graphics, image, sourceBounds, center, shadeColor);
+			return ISporeImage.drawImageTiled(graphics, image, sourceBounds, center, shadeColor);
 		}
 		else {
 			// Just stretch the remaining image through all the remaining area
-			image.drawImage(graphics, 
+			return image.drawImage(graphics, 
 					sourceBounds.x1, sourceBounds.y1, sourceBounds.getWidth(), sourceBounds.getHeight(),
 					center.x1, center.y1, center.getWidth(), center.getHeight(), shadeColor);
 		}
@@ -213,13 +223,13 @@ public interface ISporeImage {
 		return center;
 	}
 	
-	public static void drawImage(GraphicsContext graphics, ISporeImage image, boolean isTiled,
+	public static boolean drawImage(GraphicsContext graphics, ISporeImage image, boolean isTiled,
 			SPUIRectangle sourceBounds, SPUIRectangle destBounds, Color shadeColor) {
 		
 		if (isTiled) {
-			ISporeImage.drawImageTiled(graphics, image, sourceBounds, destBounds, shadeColor);
+			return ISporeImage.drawImageTiled(graphics, image, sourceBounds, destBounds, shadeColor);
 		} else {
-			image.drawImage(graphics, 
+			return image.drawImage(graphics, 
 					sourceBounds.x1, sourceBounds.y1, sourceBounds.getWidth(), sourceBounds.getHeight(), 
 					destBounds.x1, destBounds.y1, destBounds.getWidth(), destBounds.getHeight(), shadeColor);
 		}
@@ -242,10 +252,69 @@ public interface ISporeImage {
 	}
 	
 	public static Color multiplyColor(Color color1, Color color2) {
-		Color newColor = new Color(color1.getRed() * color2.getRed(),
-				color1.getGreen() * color2.getGreen(),
-				color1.getBlue() * color2.getBlue(),
-				color1.getOpacity() * color2.getOpacity());
-		return newColor;
+		if (color1 != null) {
+			if (color2 != null)
+				return new Color(
+					color1.getRed() * color2.getRed(),
+					color1.getGreen() * color2.getGreen(),
+					color1.getBlue() * color2.getBlue(),
+					color1.getOpacity() * color2.getOpacity()
+				);
+			else
+				return color1;
+		}
+		else if (color2 != null)
+			return color2;
+		else
+			return null;
+	}
+
+
+
+
+	public static boolean drawImage(GraphicsContext graphics, ISporeImage image, SPUIRectangle area, Color color, boolean tile) {
+		int scaleType;
+		if (tile) {
+			scaleType = IDrawable.TILE_IMAGE;
+		}
+		else {
+			scaleType = IDrawable.STRETCH_IMAGE;
+		}
+		return drawImage(graphics, image, area, color, scaleType, new Borders(0f, 0f, 0f, 0f));
+	}
+	public static boolean drawImage(GraphicsContext graphics, ISporeImage image, SPUIRectangle area, Color color, int scaleType, Borders scaleArea) {
+		if (image == null) {
+			return false;
+		}
+		else if (scaleType == IDrawable.STRETCH_IMAGE) {
+			ISporeImage.drawImage(graphics, image, area, color);
+		}
+		else if (scaleType == IDrawable.STRETCH_CENTER) {
+			ISporeImage.drawImageSliced(graphics, image, false, area, scaleArea, color);
+		}
+		else if (scaleType == IDrawable.TILE_IMAGE) {
+			ISporeImage.drawImageTiled(graphics, image, area, color);
+		}
+		else if (scaleType == IDrawable.TILE_CENTER) {
+			ISporeImage.drawImageSliced(graphics, image, true, area, scaleArea, color);
+		}
+		return true;
+	}
+
+
+	public static boolean drawTilingImage(GraphicsContext graphics, ISporeImage image, SPUIRectangle area, Color color, int tiling, Borders scaleArea) {
+		if (image == null) {
+			return false;
+		}
+		else if (tiling == IDrawable.TILING_EDGE) {
+			ISporeImage.drawImageSliced(graphics, image, false, area, scaleArea, color);
+		}
+		else if (tiling == IDrawable.TILING_STANDARD) {
+			ISporeImage.drawImageTiled(graphics, image, area, color);
+		}
+		else {
+			return ISporeImage.drawImage(graphics, image, area, color);
+		}
+		return true;
 	}
 }

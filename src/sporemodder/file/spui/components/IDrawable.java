@@ -18,16 +18,59 @@
 ****************************************************************************/
 package sporemodder.file.spui.components;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import sporemodder.file.spui.SPUIRectangle;
+import sporemodder.file.spui.SporeUserInterface;
 import sporemodder.file.spui.SpuiElement;
 import sporemodder.file.spui.SpuiViewer;
 import sporemodder.util.Vector2;
+import sporemodder.view.editors.spui.ISpuiGraphicItem;
 
 // Not an interface or abstract because non-implemented drawables will use this class
-public class IDrawable extends SpuiElement {
+public class IDrawable extends SpuiElement implements ISpuiGraphicItem {
+	public static final int TILING_NONE = 0;
+	public static final int TILING_STANDARD = 1;
+	public static final int TILING_EDGE = 2;
+
+
+	public static final int STRETCH_IMAGE = 1;
+	public static final int STRETCH_CENTER = 2;
+	public static final int TILE_IMAGE = 3;
+	public static final int TILE_CENTER = 4;
+
+
 	public void paint(IWindow window, SpuiViewer viewer) {
+		paint(viewer.getGraphicsContext2D(), window.getRealArea(), window.getShadeColor());
+	}
+
+	public boolean paint(GraphicsContext graphics, SPUIRectangle area, Color color) {
+		return false;
 	}
 	
 	public Vector2 getDimensions(int imageIndex) {
 		return new Vector2();
+	}
+
+	@Override
+	public Vector2 getSize() {
+		return getDimensions(SporeUserInterface.INDEX_IDLE);
+	}
+
+	ISporeImage getInspectorNamesakeImage() {
+		return null;
+	}
+	@Override
+	public String getInspectorLabel() {
+		ISporeImage image = getInspectorNamesakeImage();
+		return toString() + "    " + (image != null
+			? image.toString()
+			: "(no image)"
+		);
+	}
+
+	@Override
+	public boolean drawInspectorIcon(GraphicsContext graphics, SPUIRectangle area) {
+		return paint(graphics, area, Color.WHITE);
 	}
 }
