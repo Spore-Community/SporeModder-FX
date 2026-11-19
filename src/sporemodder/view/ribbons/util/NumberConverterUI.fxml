@@ -27,6 +27,8 @@
 				<RadioMenuItem mnemonicParsing="false" text="uint64" toggleGroup="$toggleGroup" />
 				<RadioMenuItem mnemonicParsing="false" text="float" toggleGroup="$toggleGroup" />
 				<RadioMenuItem mnemonicParsing="false" text="double" toggleGroup="$toggleGroup" />
+				<RadioMenuItem mnemonicParsing="false" text="instanceID" toggleGroup="$toggleGroup" />
+				<RadioMenuItem mnemonicParsing="false" text="year1" toggleGroup="$toggleGroup" />
 			</items>
 		</RibbonMenuButton>
 		<GridPane>

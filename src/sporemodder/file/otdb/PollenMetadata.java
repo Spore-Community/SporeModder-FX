@@ -1,6 +1,7 @@
 package sporemodder.file.otdb;
 
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,8 @@ import sporemodder.file.effects.ResourceID;
 import sporemodder.file.filestructures.Stream.StringEncoding;
 import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
+import sporemodder.util.DateTime;
+import sporemodder.util.DateTime.DateTimeType;
 
 public class PollenMetadata {
 	public int metadataVersion;
@@ -280,8 +283,16 @@ public class PollenMetadata {
 		writer.command("parentAssetKey").arguments(parentAssetKey);
 		if (metadataVersion >= 10) writer.command("parentAssetID").arguments(parentAssetID);
 		if (metadataVersion >= 12) writer.command("originalParentAssetID").arguments(originalParentAssetID);
-		writer.command("timeCreated").arguments(timeCreated);
-		writer.command("timeDownloaded").arguments(timeDownloaded);
+		
+		if (timeCreated >= 0) {
+			writer.command("timeCreated").literal(DateTime.toDateTime(timeCreated, DateTimeType.YEAR1));
+		}
+		else writer.command("timeCreated").arguments(timeCreated);
+		
+		if (timeDownloaded >= 0) {
+			writer.command("timeDownloaded").literal(DateTime.toDateTime(timeDownloaded, DateTimeType.YEAR1));
+		}
+		else writer.command("timeDownloaded").arguments(timeDownloaded);
 		
 		if (useLocale == -1) {
 			writer.command("authorID").arguments(authorID);
@@ -366,12 +377,32 @@ public class PollenMetadata {
 		}));
 		stream.addParser("timeCreated", ArgScriptParser.create((parser, line) -> {
 			if (line.getArguments(args, 1)) {
-				timeCreated = Optional.ofNullable(stream.parseLong(args, 0)).orElse(0L);
+				try {
+					timeCreated = Optional.ofNullable(stream.parseLong(args, 0)).orElse(0L);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				try {
+					long value = DateTime.toLong(args.get(0), DateTimeType.YEAR1);
+					timeCreated = Optional.ofNullable(value).orElse(0L);
+				} catch (DateTimeParseException e) {
+					e.printStackTrace();
+				}
 			}
 		}));
 		stream.addParser("timeDownloaded", ArgScriptParser.create((parser, line) -> {
 			if (line.getArguments(args, 1)) {
-				timeDownloaded = Optional.ofNullable(stream.parseLong(args, 0)).orElse(0L);
+				try {
+					timeDownloaded = Optional.ofNullable(stream.parseLong(args, 0)).orElse(0L);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				try {
+					long value = DateTime.toLong(args.get(0), DateTimeType.YEAR1);
+					timeDownloaded = Optional.ofNullable(value).orElse(0L);
+				} catch (DateTimeParseException e) {
+					e.printStackTrace();
+				}
 			}
 		}));
 		
