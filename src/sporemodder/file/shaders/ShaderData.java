@@ -246,6 +246,50 @@ public class ShaderData {
 
 		nameToIndex.put("ModAPIShader", 0x3FF);
 		
+		//// ShaderData names from F08 build
+		nameToIndex.put("skinMorphDelta", 0x005);
+		
+		nameToIndex.put("cubeMapData", 0x041);
+		nameToIndex.put("specMapData", 0x042);
+		nameToIndex.put("projectionData", 0x043);
+		nameToIndex.put("fresnelData", 0x044);
+
+		nameToIndex.put("morphs", 0x200);
+		nameToIndex.put("renderType", 0x201);
+		nameToIndex.put("nonUniformScale", 0x207);
+		nameToIndex.put("dofParams", 0x208);
+		nameToIndex.put("nDotLParams", 0x209);
+		nameToIndex.put("textureSet", 0x20D);
+		nameToIndex.put("waveControl", 0x20E);
+
+		nameToIndex.put("partsModeTexture", 0x216);
+		nameToIndex.put("unpaintableRegion", 0x217);
+		nameToIndex.put("identity", 0x218);
+		nameToIndex.put("LightingInfoReserved2", 0x21D);
+		nameToIndex.put("textureSizes", 0x221);
+		nameToIndex.put("fogging", 0x224);
+		nameToIndex.put("clipToModel", 0x227);
+		nameToIndex.put("clipToModelVector", 0x22A);
+		nameToIndex.put("clipToWorldVector", 0x22B);
+		nameToIndex.put("RTTSubRectUVs0", 0x22C);
+		nameToIndex.put("shadowParams", 0x22D);
+
+		nameToIndex.put("hairPrintable", 0x232);
+		nameToIndex.put("materialLOD", 0x237);
+		nameToIndex.put("cell", 0x238);
+		nameToIndex.put("applyMaterialColor", 0x239);
+		nameToIndex.put("debug", 0x23A);
+		nameToIndex.put("blurFilterParams", 0x23B);
+		nameToIndex.put("cubeMapFilterKernel", 0x23F);
+		nameToIndex.put("RTTSubRectUVs1", 0x240);
+		nameToIndex.put("RTTSubRectUVs4", 0x243);
+		nameToIndex.put("idColorBrightness", 0x245);
+		nameToIndex.put("highlightColor", 0x247);
+		nameToIndex.put("debugMeshInfo", 0x249);
+		nameToIndex.put("appFlags", 0x24E);
+		nameToIndex.put("terrainCameraParams", 0x24F);
+		nameToIndex.put("appLast", 0x24F);
+
 		for (Map.Entry<String, Integer> entry : nameToIndex.entrySet()) {
 			indexToName.put(entry.getValue(), entry.getKey());
 		}

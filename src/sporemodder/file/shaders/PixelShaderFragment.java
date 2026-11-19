@@ -69,12 +69,13 @@ public static final String KEYWORD = "pixelFragment";
 	public int numTextureAddresses;  // 3Ch
 	public final int[] textureAddresses = new int[3];  // 40h
 	
-	public void read(StreamReader in) throws IOException {
+	public void read(StreamReader in, int version) throws IOException {
 		input = in.readInt();
 		output = in.readInt();
 		numSamplers = in.readByte();
 		numRegisters = in.readUByte();
 		flags = in.readInt();
+		if (version == 0) in.readInt();	// mFlags in F08
 		
 		mainCode = in.readString(StringEncoding.ASCII, in.readInt());
 		declareCode = in.readString(StringEncoding.ASCII, in.readInt());
@@ -97,7 +98,7 @@ public static final String KEYWORD = "pixelFragment";
 		
 		in.readInts(textureAddresses);
 		
-		if ((flags & FLAG_NAME) != 0) {
+		if ((flags & FLAG_NAME) != 0 && version == 1) {	// in 0 version there is no names for fragments
 			shaderName = in.readString(StringEncoding.ASCII, in.readInt());
 		}
 	}
