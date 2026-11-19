@@ -62,8 +62,9 @@ public class ShaderFragments {
 		for (int i = 0; i < count; i++) {
 			
 			VertexShaderFragment shader = new VertexShaderFragment();
-			shader.read(in);
+			shader.read(in, version);
 			if ((shader.flags & ShaderFragment.FLAG_DEFINED) != 0) {
+				if (shader.shaderName == null) shader.shaderName = String.format("VertexFragment_%03d", i + 1);	// if fragment has a data but no name, then we set a new name; 
 				vertexFragments.add(shader);
 				
 				if (vsMap != null) vsMap.put(shader.shaderName, i);
@@ -79,8 +80,9 @@ public class ShaderFragments {
 		for (int i = 0; i < count; i++) {
 			
 			PixelShaderFragment shader = new PixelShaderFragment();
-			shader.read(in);
+			shader.read(in, version);
 			if ((shader.flags & VertexShaderFragment.FLAG_DEFINED) != 0) {
+				if (shader.shaderName == null) shader.shaderName = String.format("PixelFragment_%03d", i);	// if fragment has a data but no name, then we set a new name;
 				pixelFragments.add(shader);
 				
 				if (psMap != null) psMap.put(shader.shaderName, i);

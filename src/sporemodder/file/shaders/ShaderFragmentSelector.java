@@ -32,6 +32,8 @@ public class ShaderFragmentSelector {
 	// Writes the byte if shaderData[field_2] != nullptr
 	public static final int CHECK_DATA = 1;
 	
+	public static final int CHECK_NUM_WEIGHTS = 3;
+
 	// Writes the byte if objectTypeColor != field_2
 	public static final int CHECK_OBJECT_TYPE_COLOR = 2;
 	
@@ -47,11 +49,20 @@ public class ShaderFragmentSelector {
 	// Writes the byte if shaderData[field_2] != nullptr and *(byte*)shaderData[field_2] == field_4
 	public static final int CHECK_DATA_EQUAL = 7;
 	
+	// Writes the byte + shaderData[field_2] if shaderData[field_2] != nullptr
+	public static final int CHECK_ADD_DATA_3 = 8;
+
 	// Writes the byte + shaderData[field_2] if shaderData[field_2] != nullptr and shaderData[field_4] != nullptr
 	public static final int CHECK_ADD_DATA_2 = 9;
 	
 	// Writes the byte if samplers[field_2] != nullptr
 	public static final int CHECK_SAMPLER = 10;
+
+	//flag
+	public static final int CHECK_SWITCH_VERTEX_BONES = 11;
+
+	// Writes the byte if field_2 != switchVertexBones
+	public static final int CHECK_APP_FLAGS = 12;
 	
 	public int fragmentIndex;
 	public int checkType;
@@ -67,11 +78,30 @@ public class ShaderFragmentSelector {
 	public void toArgScript(ArgScriptWriter writer, List<? extends ShaderFragment> fragments) {
 		if (fragmentIndex != 0) writer.arguments(fragments.get(fragmentIndex - 1).shaderName);
 		
-		if (checkType == CHECK_DATA) {
+		switch (checkType) {
+			case CHECK_DATA: 				writer.option("hasData").arguments(ShaderData.getName(data[0])); break;
+			case CHECK_OBJECT_TYPE_COLOR: 	writer.option("objectTypeColor").ints(data[0]); break;
+			case CHECK_NUM_WEIGHTS: 		writer.option("numWeights").ints(data[0]); break;
+			case CHECK_ADD_DATA:			writer.option("array").arguments(ShaderData.getName(data[0])); break;
+			case CHECK_ADD_DATA_2:			writer.option("array").arguments(ShaderData.getName(data[0]), ShaderData.getName(data[1])); break;
+			case CHECK_ADD_DATA_3: 			writer.option("array").arguments(ShaderData.getName(data[0])); break;
+			case CHECK_DATA_2:				writer.option("hasData").arguments(ShaderData.getName(data[0]), ShaderData.getName(data[1])); break;
+			case CHECK_DATA_3:				writer.option("hasData").arguments(ShaderData.getName(data[0]), ShaderData.getName(data[1]), ShaderData.getName(data[2])); break;
+			case CHECK_DATA_EQUAL:			writer.option("compareData").arguments(ShaderData.getName(data[0]), data[1]); break;
+			case CHECK_SAMPLER:				writer.option("hasSampler").ints(data[0]); break;
+			case CHECK_SWITCH_VERTEX_BONES:	writer.option("switchVertexBones"); break;
+			case CHECK_APP_FLAGS:			writer.option("appFlags").ints(data[0], data[1]/*(data[1] << 16) | data[0]*/); break;	// one int instead of two shorts?
+			default: if (checkType != 0) 	throw new UnsupportedOperationException("Illegal operator " + checkType); break;
+		}
+
+		/*if (checkType == CHECK_DATA) {
 			writer.option("hasData").arguments(ShaderData.getName(data[0]));
 		}
 		else if (checkType == CHECK_OBJECT_TYPE_COLOR) {
 			writer.option("objectTypeColor").ints(data[0]);
+		}
+		else if (checkType == CHECK_NUM_WEIGHTS) {
+			writer.option("numWeights").ints(data[0]);
 		}
 		else if (checkType == CHECK_ADD_DATA) {
 			writer.option("array").arguments(ShaderData.getName(data[0]));
@@ -79,17 +109,19 @@ public class ShaderFragmentSelector {
 		else if (checkType == CHECK_ADD_DATA_2) {
 			writer.option("array").arguments(ShaderData.getName(data[0]), ShaderData.getName(data[1]));
 		}
+		else if (checkType == CHECK_ADD_DATA_3) {
+			writer.option("array").arguments(ShaderData.getName(data[0]));
+		}
 		else if (checkType == CHECK_DATA_2) {
 			writer.option("hasData").arguments(ShaderData.getName(data[0]), ShaderData.getName(data[1]));
 		}
-		else if (checkType == CHECK_DATA_3) {
-			writer.option("hasData").arguments(ShaderData.getName(data[0]), ShaderData.getName(data[1]), ShaderData.getName(data[2]));
-		}
-		else if (checkType == CHECK_DATA_EQUAL) {
-			writer.option("compareData").arguments(ShaderData.getName(data[0]), data[1]);
-		}
+
+@@ -91,12 +124,15 @@ public class ShaderFragmentSelector {
 		else if (checkType == CHECK_SAMPLER) {
 			writer.option("hasSampler").ints(data[0]);
+		}
+		else if (checkType == CHECK_SWITCH_VERTEX_BONES) {
+			writer.option("switchVertexBones");
 		}
 		else if (checkType == 12) {
 			writer.option("unk12").ints(data[0], data[1]);
@@ -97,6 +129,7 @@ public class ShaderFragmentSelector {
 		else if (checkType != 0) {
 			throw new UnsupportedOperationException("Illegal operator " + checkType);
 		}
+		}*/
 		
 		if (vertexUsageFlags != 0) {
 			writer.option("elements");
@@ -139,6 +172,13 @@ public class ShaderFragmentSelector {
 				data[0] = value.shortValue();
 			}
 		}
+		else if (line.getOptionArguments(args, "numWeights", 1)) {
+			checkType = CHECK_NUM_WEIGHTS;
+			Integer value;
+			if ((value = args.getStream().parseInt(args, 0)) != null) {
+				data[0] = value.shortValue();
+			}
+		}
 		else if (line.getOptionArguments(args, "array", 1, 2)) {
 			checkType = args.size() == 1 ? CHECK_ADD_DATA : CHECK_ADD_DATA_2;
 			
@@ -168,22 +208,26 @@ public class ShaderFragmentSelector {
 				data[0] = value.shortValue();
 			}
 		}
-		else if (line.getOptionArguments(args, "unk12", 2)) {
-			checkType = 12;
-			Integer value;
-			if ((value = args.getStream().parseInt(args, 0)) != null) {
-				data[0] = value.shortValue();
-			}
-			if ((value = args.getStream().parseInt(args, 1)) != null) {
-				data[1] = value.shortValue();
-			}
-		}
 		
 		if (line.getOptionArguments(args, "elements", 1, 32)) {
 			vertexUsageFlags = 0;
 			for (int i = 0; i < args.size(); ++i) {
 				int x = VertexShaderFragment.InputEnum.get(args, i);
 				if (x != -1) vertexUsageFlags |= 1 << x;
+			}
+		}
+		
+		if (line.hasFlag("switchVertexBones")) {
+			checkType = CHECK_SWITCH_VERTEX_BONES;
+		}
+		else if (line.getOptionArguments(args, "appFlags", 2)) {
+			checkType = CHECK_APP_FLAGS;
+			Integer value;
+			if ((value = args.getStream().parseInt(args, 0)) != null) {
+				data[0] = value.shortValue();
+			}
+			if ((value = args.getStream().parseInt(args, 1)) != null) {
+				data[1] = value.shortValue();
 			}
 		}
 	}

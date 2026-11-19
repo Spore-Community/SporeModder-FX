@@ -79,7 +79,7 @@ public class CompiledShaders {
 		count = in.readInt();
 		for (int i = 0; i < count; ++i) {
 			CompiledShader shader = new CompiledShader();
-			shader.read(in);
+			shader.read(in, version);
 			vertexShaders.add(shader);
 		}
 		
@@ -87,7 +87,7 @@ public class CompiledShaders {
 		count = in.readInt();
 		for (int i = 0; i < count; ++i) {
 			CompiledShader shader = new CompiledShader();
-			shader.read(in);
+			shader.read(in, version);
 			pixelShaders.add(shader);
 		}
 		
@@ -115,13 +115,14 @@ public class CompiledShaders {
 		out.writeInt(name.length());
 		out.writeString(name, StringEncoding.ASCII);
 	}
-	
+
 	public ShaderBuilder getBuilder(int id) {
 		for (ShaderBuilder shader : shaderBuilders) if (shader.id == id) return shader;
 		return null;
 	}
 	
 	private String getName(MaterialShader shader) {
+		if (shader.name == null) return HashManager.get().hexToStringUC(shader.id);	// if shader exists but hasn't a name
 		if (shader.id == HashManager.get().fnvHash(shader.name)) return shader.name;
 		else return HashManager.get().hexToString(shader.id) + '(' + shader.name + ")";
 	}

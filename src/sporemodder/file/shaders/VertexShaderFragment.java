@@ -40,10 +40,10 @@ public class VertexShaderFragment extends ShaderFragment {
 	public static final ArgScriptEnum InputEnum = new ArgScriptEnum();
 	static {
 		InputEnum.add(0, "position");
-		
+		InputEnum.add(1, "clipPosition");
 		InputEnum.add(2, "normal");
 		InputEnum.add(3, "color");
-		
+		InputEnum.add(4, "color0");
 		InputEnum.add(5, "color1");
 		InputEnum.add(6, "texcoord0");
 		InputEnum.add(7, "texcoord1");
@@ -115,13 +115,14 @@ public class VertexShaderFragment extends ShaderFragment {
 	public byte numOutputTexcoords;  // 29h
 	public byte texcoordSize;  // 2Ah
 	
-	public void read(StreamReader in) throws IOException {
+	public void read(StreamReader in, int version) throws IOException {
 		input = in.readInt();
 		output = in.readInt();
 		numOutputTexcoords = in.readByte();
 		texcoordSize = in.readByte();
 		numRegisters = in.readUByte();
 		flags = in.readInt();
+		if (version == 0) in.readInt();	// mFlags in F08
 		
 		mainCode = in.readString(StringEncoding.ASCII, in.readInt());
 		declareCode = in.readString(StringEncoding.ASCII, in.readInt());
@@ -134,7 +135,7 @@ public class VertexShaderFragment extends ShaderFragment {
 			shaderData.add(variable);
 		}
 		
-		if ((flags & 0x2) != 0) {
+		if ((flags & 0x2) != 0 && version == 1) {	// in 0 version there is no names for fragments
 			shaderName = in.readString(StringEncoding.ASCII, in.readInt());
 		}
 	}
