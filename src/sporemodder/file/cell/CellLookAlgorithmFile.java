@@ -15,6 +15,7 @@ import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
 
 public class CellLookAlgorithmFile {
+	private static final long CELL_LOOK_ALGORITHM_LENGTH_F08 = 0x10;
 	public static final int TYPE_PLAYER = 0;
 	public static final int TYPE_NPC = 1;
 	public static final int TYPE_EPIC = 2;
@@ -52,14 +53,23 @@ public class CellLookAlgorithmFile {
 		int offset = stream.readLEInt();
 		int count = stream.readLEInt();
 		
+		boolean isF08 = (stream.length() - 8) == count * CELL_LOOK_ALGORITHM_LENGTH_F08;
+
 		stream.seek(offset);
 		for (int i = 0; i < count; i++) {
 			cLookAlgorithmEntry entry = new cLookAlgorithmEntry();
 			entry.type = stream.readLEInt();
 			entry.action = stream.readLEInt();
-			entry.playerLookTable = stream.readLEInt();
-			entry.npcLookTable = stream.readLEInt();
-			entry.epicLookTable = stream.readLEInt();
+			if (isF08) {
+				entry.npcLookTable = stream.readLEInt();
+				entry.playerLookTable = stream.readLEInt();
+			}
+			else {
+				entry.playerLookTable = stream.readLEInt();
+				entry.npcLookTable = stream.readLEInt();
+			}
+			if (!isF08)
+				entry.epicLookTable = stream.readLEInt();
 			entries.add(entry);
 		}
 	}

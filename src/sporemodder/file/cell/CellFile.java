@@ -17,6 +17,9 @@ import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
 
 public class CellFile {
+	public static final int F08_CELLS_LENGTH = 0x190;
+	public static final int RELEASE_CELLS_LENGTH = 0x31C;
+
 	public static final ArgScriptEnum ENUM_AI_TYPE = new ArgScriptEnum();
 	static {
 		ENUM_AI_TYPE.add(-1, "none");
@@ -122,13 +125,13 @@ public class CellFile {
 	// size 0x180
 	public static class cAIData
 	{
-		public int type;  // ENUM_AI_TYPE
-		public float awarenessRadius = 10.0f;
+		public int type = -1;  // ENUM_AI_TYPE
+		public float awarenessRadius;  // 10.0f;
 		public float awarenessRadiusFood;
 		public float awarenessRadiusPredator;
 		public int movementStyle;  // ENUM_AI_MOVEMENT_STYLE
 		public boolean flocking;
-		public float speed = 1.0f;
+		public float speed;  // 1.0f;
 		public float chaseSpeed;
 		public float wanderSpeed;
 		public float fleeSpeed;
@@ -138,42 +141,42 @@ public class CellFile {
 		public float fearsNearbyDeathTime;
 		public float protectRadius;
 		public float protectTime;
-		public float turnFactor = 1.0f;
+		public float turnFactor;  // 1.0f;
 		public boolean axialMovement;
 		public float spawnTime;
 		public float spawnRestTime;
 		public int spawnOutput;  // loottable ID
-		public float arcLength = 3.0f;
+		public float arcLength;  // 3.0f;
 		public float arcLengthSecondary;
-		public int numArcs = 3;
+		public int numArcs;  // 3;
 		public int keyTransformation;  // cell ID
 		public int keyProjectile;  // cell ID
-		public int food = 3;  // ENUM_MEDIUM
+		public int food;  // 3;  // ENUM_MEDIUM
 		public int growCount;
 		public int digestionCount;
 		public float digestionTime;
 		public int digestionOutput;  // loottable ID
-		public float fleeTime = 5.0f;
+		public float fleeTime;  // 5.0f;
 		public float fleeRestTime;
-		public float chaseTime = 10000f;
+		public float chaseTime;  // 10000f;
 		public float chaseRestTime;
-		public boolean chasesDamage = true;
-		public boolean fearsMouths = true;
-		public boolean fearsWeapons = true;
-		public boolean fearsElectric = true;
-		public boolean fearsPoison = true;
-		public boolean fearsDamage = true;
+		public boolean chasesDamage;  // true;
+		public boolean fearsMouths;  // true;
+		public boolean fearsWeapons;  // true;
+		public boolean fearsElectric;  // true;
+		public boolean fearsPoison;  // true;
+		public boolean fearsDamage;  // true;
 		public boolean ignoresFood;
 		public float awakeTime;
 		public float sleepTime;
-		public int growAmount = 1;
-		public float hatchDuration = 10.0f;
+		public int growAmount;  // 1;
+		public float hatchDuration;  // 10.0f;
 		public float poisonRecharge;
-		public float electricRecharge = -1.0f;
-		public float electricRechargeVsSmall = -1.0f;
+		public float electricRecharge;  // -1.0f;
+		public float electricRechargeVsSmall;  // -1.0f;
 		public float electricDischarge;
 		
-		public void read(StreamReader stream) throws IOException
+		public void read(StreamReader stream, Long length) throws IOException
 		{
 			type = stream.readLEInt();
 			awarenessRadius = stream.readLEFloat();
@@ -190,14 +193,19 @@ public class CellFile {
 			fearsNearbyDeathRadius = stream.readLEFloat();
 			fearsNearbyDamageTime = stream.readLEFloat();
 			fearsNearbyDeathTime = stream.readLEFloat();
-			protectRadius = stream.readLEFloat();
-			protectTime = stream.readLEFloat();
-			turnFactor = stream.readLEFloat();
-			axialMovement = stream.readBoolean();
-			stream.skip(3);
-			spawnTime = stream.readLEFloat();
-			spawnRestTime = stream.readLEFloat();
-			spawnOutput = stream.readLEInt();
+			if (length == RELEASE_CELLS_LENGTH) {
+				protectRadius = stream.readLEFloat();
+				protectTime = stream.readLEFloat();
+				turnFactor = stream.readLEFloat();
+				axialMovement = stream.readBoolean();
+				stream.skip(3);
+				spawnTime = stream.readLEFloat();
+				spawnRestTime = stream.readLEFloat();
+				spawnOutput = stream.readLEInt();
+			}
+			else if (length == F08_CELLS_LENGTH)
+				turnFactor = stream.readLEFloat();
+
 			arcLength = stream.readLEFloat();
 			arcLengthSecondary = stream.readLEFloat();
 			numArcs = stream.readLEInt();
@@ -212,21 +220,29 @@ public class CellFile {
 			fleeRestTime = stream.readLEFloat();
 			chaseTime = stream.readLEFloat();
 			chaseRestTime = stream.readLEFloat();
-			chasesDamage = stream.readBoolean();
+			if (length == RELEASE_CELLS_LENGTH)
+				chasesDamage = stream.readBoolean();
+
 			fearsMouths = stream.readBoolean();
 			fearsWeapons = stream.readBoolean();
 			fearsElectric = stream.readBoolean();
 			fearsPoison = stream.readBoolean();
 			fearsDamage = stream.readBoolean();
-			ignoresFood = stream.readBoolean();
-			stream.skip(1);
+			if (length == RELEASE_CELLS_LENGTH) {
+				ignoresFood = stream.readBoolean();
+				stream.skip(1);
+			}
+			else if (length == F08_CELLS_LENGTH)
+				stream.skip(3);
+
 			awakeTime = stream.readLEFloat();
 			sleepTime = stream.readLEFloat();
 			growAmount = stream.readLEInt();
 			hatchDuration = stream.readLEFloat();
 			poisonRecharge = stream.readLEFloat();
 			electricRecharge = stream.readLEFloat();
-			electricRechargeVsSmall = stream.readLEFloat();
+			if (length == RELEASE_CELLS_LENGTH)
+				electricRechargeVsSmall = stream.readLEFloat();
 			electricDischarge = stream.readLEFloat();
 		}
 		
@@ -368,12 +384,15 @@ public class CellFile {
 	
 	public void read(StreamReader stream) throws IOException
 	{
+		long length = stream.length();
 		structureID = stream.readLEInt();
 		name.text = stream.readString(StringEncoding.UTF16LE, 80);
 		name.instanceID = stream.readLEInt();
 		hp = stream.readLEInt();
-		fixedOrientation = stream.readBoolean();
-		stream.skip(3);
+		if (length == RELEASE_CELLS_LENGTH) {
+			fixedOrientation = stream.readBoolean();
+			stream.skip(3);
+		}
 		flags = stream.readLEInt();
 		cellType = stream.readLEInt();
 		unlockType = stream.readLEInt();
@@ -386,9 +405,12 @@ public class CellFile {
 		loot = stream.readLEInt();
 		explosionTable = stream.readLEInt();
 		poison = stream.readLEInt();
-		ai.read(stream);
-		ai_hard.read(stream);
-		ai_easy.read(stream);
+		ai.read(stream, length);
+		if (length == RELEASE_CELLS_LENGTH) {
+			//ai.read(stream, length);
+			ai_hard.read(stream, length);
+			ai_easy.read(stream, length);
+		}
 		friendGroup = stream.readLEInt();
 		wontAttackPlayer = stream.readBoolean();
 		wontAttackPlayerWhenSmall = stream.readBoolean();
@@ -398,9 +420,11 @@ public class CellFile {
 		eat.hpValue = stream.readLEInt();
 		eat.bomb = stream.readBoolean();
 		eat.poisonNova = stream.readBoolean();
-		stream.skip(2);
-		triggersEscapeMission = stream.readBoolean();
-		stream.skip(3);
+		if (length == RELEASE_CELLS_LENGTH) {
+			stream.skip(2);
+			triggersEscapeMission = stream.readBoolean();
+			stream.skip(3);
+		}
 	}
 	
 	public void write(StreamWriter stream) throws IOException

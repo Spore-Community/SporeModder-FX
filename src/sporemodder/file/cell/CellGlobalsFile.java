@@ -11,6 +11,10 @@ import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
 
 public class CellGlobalsFile {
+	private static final long CELL_GAME_LENGTH_EP1 = 0x114;
+	private static final long CELL_GAME_LENGTH_F08 = 0XC4;
+	private static final long CELL_GAME_LENGTH_CORE = 0X108;
+
 	public static final ArgScriptEnum ENUM_GAME_MODE = new ArgScriptEnum();
 	static {
 		ENUM_GAME_MODE.add(0, "0");
@@ -122,7 +126,9 @@ public class CellGlobalsFile {
 	
 	public void read(StreamReader stream) throws IOException
 	{
-		gameMode = stream.readLEInt();
+		if (stream.length() == CELL_GAME_LENGTH_EP1)
+			gameMode = stream.readLEInt();
+
 		world_1 = stream.readLEInt();
 		world_2 = stream.readLEInt();
 		world_3 = stream.readLEInt();
@@ -136,7 +142,10 @@ public class CellGlobalsFile {
 		worldRandom = stream.readLEInt();
 		worldRandomBg = stream.readLEInt();
 		startCell = stream.readLEInt();
-		startingCellKey = stream.readLEInt();
+		if (stream.length() == CELL_GAME_LENGTH_EP1)
+			startingCellKey = stream.readLEInt();
+
+		if (stream.length() == CELL_GAME_LENGTH_F08) stream.skip(0x8);	// startEgg, startHatch, 
 		effectMapEntry = stream.readLEInt();
 		backgroundMapEntry = stream.readLEInt();
 		flowMultiplier = stream.readLEFloat();
@@ -154,7 +163,9 @@ public class CellGlobalsFile {
 		ciliaSpeedAsJet = stream.readLEFloat();
 		flagellaSpeedAsJet = stream.readLEFloat();
 		flagellaSpeedAsCilia = stream.readLEFloat();
-		ciliaSpeedAsFlagella = stream.readLEFloat();
+		if (stream.length() != CELL_GAME_LENGTH_F08)
+			ciliaSpeedAsFlagella = stream.readLEFloat();
+
 		keyLookAlgorithm = stream.readLEInt();
 		beachDistance = stream.readLEFloat();
 		finishLineDistance = stream.readLEFloat();
@@ -172,25 +183,30 @@ public class CellGlobalsFile {
 		startLevelNoAnythingRadius = stream.readLEFloat();
 		numHighLOD_FG = stream.readLEInt();
 		numHighLOD_BG = stream.readLEInt();
-		percentAnimalFood = stream.readLEFloat();
-		percentPlantFood = stream.readLEFloat();
-		field_208 = stream.readLEInt();
-		controlMethod = stream.readLEInt();
-		editorMethod = stream.readLEInt();
-		tutorialMethod = stream.readLEInt();
-		endingMethod = stream.readLEInt();
-		eyeMethod = stream.readLEInt();
-		timeToGoldyCinematic = stream.readLEFloat();
-		missionTime = stream.readLEFloat();
-		missionResetTime = stream.readLEFloat();
-		escapeMinDistance = stream.readLEFloat();
-		escapeMaxDistance = stream.readLEFloat();
-		escapeDelayMedium = stream.readLEFloat();
-		escapeTimerHard = stream.readLEFloat();
-		nonAnimatingCiliaMovementFactor = stream.readLEFloat();
-		nonAnimatingJetMovementFactor = stream.readLEFloat();
-		mateTriggerDistance = stream.readLEFloat();
-		mateSpawnDistance = stream.readLEFloat();
+		if (stream.length() != CELL_GAME_LENGTH_F08) {
+			percentAnimalFood = stream.readLEFloat();
+			percentPlantFood = stream.readLEFloat();
+
+			if (stream.length() == CELL_GAME_LENGTH_EP1)
+				field_208 = stream.readLEInt();
+
+			controlMethod = stream.readLEInt();
+			editorMethod = stream.readLEInt();
+			tutorialMethod = stream.readLEInt();
+			endingMethod = stream.readLEInt();
+			eyeMethod = stream.readLEInt();
+			timeToGoldyCinematic = stream.readLEFloat();
+			missionTime = stream.readLEFloat();
+			missionResetTime = stream.readLEFloat();
+			escapeMinDistance = stream.readLEFloat();
+			escapeMaxDistance = stream.readLEFloat();
+			escapeDelayMedium = stream.readLEFloat();
+			escapeTimerHard = stream.readLEFloat();
+			nonAnimatingCiliaMovementFactor = stream.readLEFloat();
+			nonAnimatingJetMovementFactor = stream.readLEFloat();
+			mateTriggerDistance = stream.readLEFloat();
+			mateSpawnDistance = stream.readLEFloat();
+		}
 		
 		if (stream.getFilePointer() != stream.length()) {
 			throw new IOException("Error: LOOTTABLE file still has data left, file pointer " + stream.getFilePointer());
