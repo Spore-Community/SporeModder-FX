@@ -27,6 +27,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import sporemodder.UIManager;
 import sporemodder.view.Controller;
+import sporemodder.util.DataTime;
+import sporemodder.util.DataTime.DataTimeType;
 
 public class NumberConverterUI implements Controller {
 	
@@ -157,6 +159,12 @@ public class NumberConverterUI implements Controller {
 		else if (mode.equals("double")) {
 			return Long.toHexString(Double.doubleToRawLongBits(Double.parseDouble(input)));
 		}
+		else if (mode.equals("instanceID")) {
+			return Long.toHexString(DataTime.toLong(input, DataTimeType.INSTANCEID));
+		}
+		else if (mode.equals("year1")) {
+			return Long.toHexString(DataTime.toLong(input, DataTimeType.YEAR1));
+		}
 		
 		return null;
 	}
@@ -196,8 +204,15 @@ public class NumberConverterUI implements Controller {
 		else if (mode.equals("double")) {
 			return Double.toString(Double.longBitsToDouble(Long.parseUnsignedLong(input, 16)));
 		}
+		else if (mode.equals("instanceID")) {
+			long num = Long.parseLong(input, 16);
+			return DataTime.toDateTime(num, DataTimeType.INSTANCEID);
+		}
+		else if (mode.equals("year1")) {
+			long num = Long.parseLong(input, 16);
+			return DataTime.toDateTime(num, DataTimeType.YEAR1);
+		}
 		
 		return null;
 	}
-
 }
