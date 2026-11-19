@@ -17,6 +17,7 @@ import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
 
 public class CellPopulateFile {
+	private static final long CELL_MARKER_LENGTH_F08 = 0x40;
 	public static final ArgScriptEnum ENUM_SCALE = new ArgScriptEnum();
 	static {
 		ENUM_SCALE.add(-1, "none");
@@ -101,6 +102,9 @@ public class CellPopulateFile {
 		if (offset != 0x10 && count != 0)
 			throw new IOException("Error: offset was not 16, file pointer " + stream.getFilePointer());
 		
+		long sizeFile = stream.length() - 0x10;
+		boolean isF08 = sizeFile == count * CELL_MARKER_LENGTH_F08;
+
 		for (int i = 0; i < count; i++) {
 			cMarker marker = new cMarker();
 			marker.field_0 = stream.readLEInt();
@@ -115,9 +119,11 @@ public class CellPopulateFile {
 			marker.plantType = stream.readLEInt();
 			marker.type = stream.readLEInt();
 			marker.count = stream.readLEFloat();
-			marker.count_easy = stream.readLEFloat();
-			marker.count_med = stream.readLEFloat();
-			marker.count_hard = stream.readLEFloat();
+			if (!isF08) {
+				marker.count_easy = stream.readLEFloat();
+				marker.count_med = stream.readLEFloat();
+				marker.count_hard = stream.readLEFloat();
+			}
 			marker.size = stream.readLEInt();
 			marker.parts = stream.readLEInt();
 			marker.linear = stream.readLEInt();

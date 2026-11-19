@@ -42,8 +42,8 @@ public class CellStructureFile {
 		public int structureID;
 		public int randomCreatureID;
 		public int effectID;  // also model ID and creature ID
-		public int levelMin;
-		public int levelMax;
+		public int levelMin = -1;
+		public int levelMax = -1;
 		public final ColorRGB color = new ColorRGB();
 	}
 	
@@ -56,16 +56,29 @@ public class CellStructureFile {
 	
 	public void read(StreamReader stream) throws IOException
 	{
+		// check if the file is F08 version
+		stream.seek(0x14);
+		boolean isF08 = stream.readLEInt() == 0;
+		stream.seek(0);
+		if (isF08) {
+			int onEat = stream.readLEInt();
+			int onGrow = stream.readLEInt();
+			int onZoom = stream.readLEInt();
+			int onBreak = stream.readLEInt();
+		}
 		onDeath = stream.readLEInt();
 		onDeathSmall = stream.readLEInt();
 		onDeathLarge = stream.readLEInt();
 		onHatch = stream.readLEInt();
 		onStartHatch = stream.readLEInt();
+		if (isF08) {
+			int onSpawn = stream.readLEInt();
+		}
 		
 		int offset = stream.readLEInt();
 		int count = stream.readLEInt();
-		if (offset != 28)
-			throw new IOException("Error: offset was not 28, file pointer " + stream.getFilePointer());
+		if (offset != 28 && offset != 48)
+			throw new IOException("Error: offset was not 28 or 48, file pointer " + stream.getFilePointer());
 		
 		for (int i = 0; i < count; i++) {
 			cSPAttachment entry = new cSPAttachment();
@@ -74,8 +87,10 @@ public class CellStructureFile {
 			entry.structureID = stream.readLEInt();
 			entry.randomCreatureID = stream.readLEInt();
 			entry.effectID = stream.readLEInt();
-			entry.levelMin = stream.readLEInt();
-			entry.levelMax = stream.readLEInt();
+			if (!isF08) {
+				entry.levelMin = stream.readLEInt();
+				entry.levelMax = stream.readLEInt();
+			}
 			entry.color.readLE(stream);
 			entries.add(entry);
 		}
