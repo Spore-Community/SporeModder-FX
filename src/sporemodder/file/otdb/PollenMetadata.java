@@ -16,8 +16,8 @@ import sporemodder.file.effects.ResourceID;
 import sporemodder.file.filestructures.Stream.StringEncoding;
 import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
-import sporemodder.util.DataTime;
-import sporemodder.util.DataTime.DataTimeType;
+import sporemodder.util.DateTime;
+import sporemodder.util.DateTime.DateTimeType;
 
 public class PollenMetadata {
 	public int metadataVersion;
@@ -285,12 +285,12 @@ public class PollenMetadata {
 		if (metadataVersion >= 12) writer.command("originalParentAssetID").arguments(originalParentAssetID);
 		
 		if (timeCreated >= 0) {
-			writer.command("timeCreated").literal(DataTime.toDateTime(timeCreated, DataTimeType.YEAR1));
+			writer.command("timeCreated").literal(DateTime.toDateTime(timeCreated, DateTimeType.YEAR1));
 		}
 		else writer.command("timeCreated").arguments(timeCreated);
 		
 		if (timeDownloaded >= 0) {
-			writer.command("timeDownloaded").literal(DataTime.toDateTime(timeDownloaded, DataTimeType.YEAR1));
+			writer.command("timeDownloaded").literal(DateTime.toDateTime(timeDownloaded, DateTimeType.YEAR1));
 		}
 		else writer.command("timeDownloaded").arguments(timeDownloaded);
 		
@@ -383,7 +383,7 @@ public class PollenMetadata {
 					e.printStackTrace();
 				}
 				try {
-					long value = DataTime.toLong(args.get(0), DataTimeType.YEAR1);
+					long value = DateTime.toLong(args.get(0), DateTimeType.YEAR1);
 					timeCreated = Optional.ofNullable(value).orElse(0L);
 				} catch (DateTimeParseException e) {
 					e.printStackTrace();
@@ -398,7 +398,7 @@ public class PollenMetadata {
 					e.printStackTrace();
 				}
 				try {
-					long value = DataTime.toLong(args.get(0), DataTimeType.YEAR1);
+					long value = DateTime.toLong(args.get(0), DateTimeType.YEAR1);
 					timeDownloaded = Optional.ofNullable(value).orElse(0L);
 				} catch (DateTimeParseException e) {
 					e.printStackTrace();
