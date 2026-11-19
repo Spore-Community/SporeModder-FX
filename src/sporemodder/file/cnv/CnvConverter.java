@@ -19,6 +19,7 @@
 package sporemodder.file.cnv;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import sporemodder.file.filestructures.FileStream;
@@ -43,8 +44,21 @@ public class CnvConverter implements Converter {
 	
 	private boolean decode(StreamReader stream, File outputFile) throws Exception {
 		CnvUnit unit = new CnvUnit();
-		unit.read(stream);
-		
+		boolean done = false;
+		try {
+		    unit.read(stream, false);
+			done = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (!done) {
+			try {
+				unit.clear(); stream.seek(0);
+				unit.read(stream, true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		try (PrintWriter out = new PrintWriter(outputFile)) {
 		    out.println(unit.toArgScript());
 		}

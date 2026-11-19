@@ -14,14 +14,14 @@ public class CnvEventLog {
 	public String name;
 	public final List<CnvText> texts = new ArrayList<>();
 	
-	public void read(StreamReader stream) throws IOException {
+	public void read(StreamReader stream, boolean readAsF08) throws IOException {
 		id = stream.readLEInt();
 		name = stream.readString(StringEncoding.ASCII, stream.readInt());
 		
 		int count = stream.readLEInt();
 		for (int i = 0; i < count; ++i) {
 			CnvText text = new CnvText();
-			text.read(stream);
+			text.read(stream, readAsF08);
 			texts.add(text);
 		}
 	}
