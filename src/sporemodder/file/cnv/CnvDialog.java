@@ -2,6 +2,7 @@ package sporemodder.file.cnv;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sporemodder.file.filestructures.Stream.StringEncoding;
@@ -13,10 +14,13 @@ import sporemodder.file.argscript.ArgScriptWriter;
 
 public class CnvDialog {
 	public static class CnvDialogResponse {
-		public final boolean[] requireFlags = new boolean[154];
-		public final boolean[] excludeFlags = new boolean[154];
-		public final boolean[] enableRequireFlags = new boolean[154];
-		public final boolean[] enableExcludeFlags = new boolean[154];
+		public static final int DIALOG_RESPONSE_FLAGS_LENGTH = 154;
+		public static final int DIALOG_RESPONSE_FLAGS_LENGTH_F08 = 144;
+
+		public boolean[] requireFlags = new boolean[DIALOG_RESPONSE_FLAGS_LENGTH];
+		public boolean[] excludeFlags = new boolean[DIALOG_RESPONSE_FLAGS_LENGTH];
+		public boolean[] enableRequireFlags = new boolean[DIALOG_RESPONSE_FLAGS_LENGTH];
+		public boolean[] enableExcludeFlags = new boolean[DIALOG_RESPONSE_FLAGS_LENGTH];
 		public int action;
 		public final ResourceKey key = new ResourceKey();
 		public final List<CnvText> texts = new ArrayList<>();
@@ -38,15 +42,17 @@ public class CnvDialog {
 	public final List<CnvText> texts = new ArrayList<>();
 	public final List<CnvDialogResponse> responses = new ArrayList<>();
 	
-	public void read(StreamReader stream) throws IOException {
+	public void read(StreamReader stream, boolean readAsF08) throws IOException {
 		id = stream.readLEInt();
 		name = stream.readString(StringEncoding.ASCII, stream.readInt());
 		
-		value1 = stream.readBoolean();
-		showAccept = stream.readBoolean();
-		showDecline = stream.readBoolean();
-		value4 = stream.readBoolean();
-		showStatic = stream.readBoolean();
+		if (readAsF08 == false){
+			value1 = stream.readBoolean();
+			showAccept = stream.readBoolean();
+			showDecline = stream.readBoolean();
+			value4 = stream.readBoolean();
+			showStatic = stream.readBoolean();
+		}
 		action = stream.readLEInt();
 		key.setGroupID(stream.readInt());
 		key.setTypeID(stream.readInt());
@@ -55,7 +61,7 @@ public class CnvDialog {
 		int count = stream.readLEInt();
 		for (int i = 0; i < count; ++i) {
 			CnvText text = new CnvText();
-			text.read(stream);
+			text.read(stream, readAsF08);
 			texts.add(text);
 		}
 		
@@ -64,6 +70,12 @@ public class CnvDialog {
 			CnvDialogResponse response = new CnvDialogResponse();
 			responses.add(response);
 			
+			if (readAsF08) {
+				response.requireFlags = Arrays.copyOf(response.requireFlags, CnvDialogResponse.DIALOG_RESPONSE_FLAGS_LENGTH_F08);
+				response.excludeFlags = Arrays.copyOf(response.excludeFlags, CnvDialogResponse.DIALOG_RESPONSE_FLAGS_LENGTH_F08);
+				response.enableRequireFlags = Arrays.copyOf(response.enableRequireFlags, CnvDialogResponse.DIALOG_RESPONSE_FLAGS_LENGTH_F08);
+				response.enableExcludeFlags = Arrays.copyOf(response.enableExcludeFlags, CnvDialogResponse.DIALOG_RESPONSE_FLAGS_LENGTH_F08);
+			}
 			stream.readBooleans(response.requireFlags);
 			stream.readBooleans(response.excludeFlags);
 			stream.readBooleans(response.enableRequireFlags);
@@ -76,7 +88,7 @@ public class CnvDialog {
 			int count2 = stream.readLEInt();
 			for (int j = 0; j < count2; ++j) {
 				CnvText text = new CnvText();
-				text.read(stream);
+				text.read(stream, readAsF08);
 				response.texts.add(text);
 			}
 			

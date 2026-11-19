@@ -117,7 +117,7 @@ public class CnvUnit {
 		}
 	}
 
-	public void read(StreamReader stream) throws IOException {
+	public void read(StreamReader stream, boolean readAsF08) throws IOException {
 		
 		int count = stream.readLEInt();
 		for (int i = 0; i < count; ++i) {
@@ -129,14 +129,14 @@ public class CnvUnit {
 		count = stream.readLEInt();
 		for (int i = 0; i < count; ++i) {
 			CnvDialog dialog = new CnvDialog();
-			dialog.read(stream);
+			dialog.read(stream, readAsF08);
 			dialogs.add(dialog);
 		}
 		
 		count = stream.readLEInt();
 		for (int i = 0; i < count; ++i) {
 			CnvEventLog log = new CnvEventLog();
-			log.read(stream);
+			log.read(stream, readAsF08);
 			eventLogs.add(log);
 		}
 		

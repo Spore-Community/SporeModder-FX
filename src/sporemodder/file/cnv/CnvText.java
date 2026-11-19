@@ -1,6 +1,7 @@
 package sporemodder.file.cnv;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import sporemodder.file.filestructures.StreamReader;
 import sporemodder.file.filestructures.StreamWriter;
@@ -9,17 +10,25 @@ import sporemodder.file.argscript.ArgScriptArguments;
 import sporemodder.file.argscript.ArgScriptLine;
 import sporemodder.file.argscript.ArgScriptStream;
 import sporemodder.file.argscript.ArgScriptWriter;
+import sporemodder.file.cnv.CnvDialog.CnvDialogResponse;
 import sporemodder.file.effects.ResourceID;
 import sporemodder.file.locale.LocaleUnit;
 
 public class CnvText {
-	public final boolean[] requireFlags = new boolean[154];
-	public final boolean[] excludeFlags = new boolean[154];
+	public static final int TEXT_FLAGS_LENGTH = 154;
+	public static final int TEXT_FLAGS_LENGTH_F08 = 144;
+
+	public boolean[] requireFlags = new boolean[TEXT_FLAGS_LENGTH];
+	public boolean[] excludeFlags = new boolean[TEXT_FLAGS_LENGTH];
 	public int tableID;
 	public int instanceID;
 	public int emotion;
 	
-	public void read(StreamReader stream) throws IOException {
+	public void read(StreamReader stream, boolean readAsF08) throws IOException {
+		if (readAsF08) {
+			requireFlags = Arrays.copyOf(requireFlags, TEXT_FLAGS_LENGTH_F08);
+			excludeFlags = Arrays.copyOf(excludeFlags, TEXT_FLAGS_LENGTH_F08);
+		}
 		stream.readBooleans(requireFlags);
 		stream.readBooleans(excludeFlags);
 		instanceID = stream.readInt();
