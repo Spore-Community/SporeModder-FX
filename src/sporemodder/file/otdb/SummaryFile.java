@@ -66,7 +66,7 @@ public class SummaryFile {
 
 		/// General
 		ENUM_PARAMETERS.add(0x05fb4759, "published");
-		ENUM_PARAMETERS.add(0x03cc89b1, "contentType");
+		ENUM_PARAMETERS.add(0x03cc89b1, "feedID");
 		ENUM_PARAMETERS.add(0x05dc0b88, "contentSource");
 		ENUM_PARAMETERS.add(0x061ef9b1, "timeDownloaded");
 		ENUM_PARAMETERS.add(0xcd6e902c, "hasgaprop");
@@ -129,11 +129,11 @@ public class SummaryFile {
 		ENUM_AMTAGS.add(0x52C8CA5, "Texture");
 	}
 
-	public static final ArgScriptEnum ENUM_CONTENTTYPE = new ArgScriptEnum();
+	public static final ArgScriptEnum ENUM_FEED_ID = new ArgScriptEnum();
 	static {
-		ENUM_CONTENTTYPE.add(0x913b23be, "ShippingContent");
-		ENUM_CONTENTTYPE.add(0x5a3b873d, "LocalContent");
-		ENUM_CONTENTTYPE.add(0x058669b4, "PollinatedContent");
+		ENUM_FEED_ID.add(0x913b23be, "ShippingContent");
+		ENUM_FEED_ID.add(0x5a3b873d, "LocalContent");
+		ENUM_FEED_ID.add(0x058669b4, "PollinatedContent");
 	}
 
 	public static final ArgScriptEnum ENUM_CONTENTSOURCE = new ArgScriptEnum();
@@ -238,7 +238,7 @@ public class SummaryFile {
 
 	public String GetEnumString(Number value, String parameter) {
 		switch (parameter) {
-			case "contentType":		return ENUM_CONTENTTYPE.get(value.intValue());
+			case "feedID":		return ENUM_FEED_ID.get(value.intValue());
 			case "contentSource":	return ENUM_CONTENTSOURCE.get(value.intValue());
 			case "vehicleType":		return ENUM_VEHICLETYPES.get(value.intValue());
 			case "published":
@@ -261,7 +261,7 @@ public class SummaryFile {
 	public Integer GetEnumValue(ArgScriptArguments args, int id) {
 		if (ENUM_PARAMETERS.get(id) == null) return null;
 		switch (ENUM_PARAMETERS.get(id)) {
-			case "contentType":		return ENUM_CONTENTTYPE.get(args.get(2));
+			case "feedID":		return ENUM_FEED_ID.get(args.get(2));
 			case "contentSource":	return ENUM_CONTENTSOURCE.get(args.get(2));
 			case "vehicleType":		return ENUM_VEHICLETYPES.get(args.get(2));
 			case "published":
